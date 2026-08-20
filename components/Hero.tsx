@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import SwiftTerminalConsole from '@/components/SwiftTerminalConsole';
+import Interactive3dInfographic from '@/components/Interactive3dInfographic';
 
 export default function Hero() {
   const [website, setWebsite] = useState('');
@@ -91,9 +91,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: Interactive Live SWIFT Terminal Console (Span 6) ── */}
+        {/* ── RIGHT COLUMN: Interactive 3D Architecture Infographic (Span 6) ── */}
         <div className="lg:col-span-6 w-full flex items-center justify-center">
-          <SwiftTerminalConsole />
+          <Interactive3dInfographic />
         </div>
       </div>
     </section>
