@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import Interactive3dInfographic from '@/components/Interactive3dInfographic';
+import CompanyHubMap from '@/components/CompanyHubMap';
 
 export default function Hero() {
   const [website, setWebsite] = useState('');
@@ -91,9 +91,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: Interactive 3D Architecture Infographic (Span 6) ── */}
+        {/* ── RIGHT COLUMN: Interactive Company Hub Map (Span 6) ── */}
         <div className="lg:col-span-6 w-full flex items-center justify-center">
-          <Interactive3dInfographic />
+          <CompanyHubMap />
         </div>
       </div>
     </section>
