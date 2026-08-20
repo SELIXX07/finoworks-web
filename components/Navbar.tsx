@@ -33,16 +33,16 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-5 left-0 right-0 z-50 flex items-center justify-center px-4 sm:px-6 pointer-events-none">
-      {/* ── Apple Liquid Glass Pill Container ── */}
+      {/* ── Apple Liquid Glass Pill Container (Secondary White Base) ── */}
       <nav
         className="pointer-events-auto relative w-full max-w-[1060px] h-[54px] rounded-full px-4 sm:px-6 grid grid-cols-2 md:grid-cols-[1fr_auto_1fr] items-center transition-all duration-300"
         style={{
-          background: 'rgba(255, 255, 255, 0.68)',
+          background: 'rgba(255, 255, 255, 0.85)',
           backdropFilter: 'blur(28px) saturate(190%)',
           WebkitBackdropFilter: 'blur(28px) saturate(190%)',
-          border: '1px solid rgba(255, 255, 255, 0.85)',
+          border: '1px solid rgba(255, 255, 255, 0.95)',
           boxShadow:
-            '0 20px 45px -12px rgba(10, 20, 50, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.04), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03)',
+            '0 20px 45px -12px rgba(0, 85, 255, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.04), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03)',
         }}
       >
         {/* ── LEFT: Logo ── */}
@@ -55,7 +55,7 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* ── CENTER: True Mathematically Centered Navigation Links ── */}
+        {/* ── CENTER: Primary Blue Active Nav Pill ── */}
         <div className="hidden md:flex items-center justify-center gap-1.5 px-2 py-1 rounded-full bg-slate-900/[0.04] border border-black/[0.03]">
           {navLinks.map((l) => {
             const isActive = pathname === l.href;
@@ -65,8 +65,8 @@ export default function Navbar() {
                 href={l.href}
                 className={`relative text-[13px] font-bold px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
+                    ? 'bg-[#0055ff] text-white shadow-[0_2px_10px_rgba(0,85,255,0.35)]'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
                 }`}
               >
                 {l.label}
@@ -75,14 +75,14 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* ── RIGHT: Live Clock + Book CTA ── */}
+        {/* ── RIGHT: Live Clock + Primary Blue Book CTA ── */}
         <div className="hidden md:flex items-center justify-end gap-4">
           <span className="font-mono text-[11px] text-slate-500 font-bold tracking-wider opacity-80">
             {clock}
           </span>
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-1.5 bg-[#0055ff] hover:bg-slate-900 text-white font-bold text-[12px] px-4 py-2 rounded-full transition-all duration-200 shadow-[0_4px_14px_rgba(0,85,255,0.35)] hover:shadow-md"
+            className="inline-flex items-center gap-1.5 bg-[#0055ff] hover:bg-[#0048e5] text-white font-bold text-[12px] px-4 py-2 rounded-full transition-all duration-200 shadow-[0_4px_14px_rgba(0,85,255,0.35)] hover:shadow-md"
           >
             <span>Book Assessment</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -106,12 +106,12 @@ export default function Navbar() {
         <div
           className="pointer-events-auto fixed top-20 left-4 right-4 rounded-3xl p-6 shadow-2xl flex flex-col gap-3 z-50 md:hidden animate-in fade-in zoom-in-95 duration-200"
           style={{
-            background: 'rgba(255, 255, 255, 0.88)',
+            background: 'rgba(255, 255, 255, 0.95)',
             backdropFilter: 'blur(30px) saturate(200%)',
             WebkitBackdropFilter: 'blur(30px) saturate(200%)',
             border: '1px solid rgba(255, 255, 255, 0.9)',
             boxShadow:
-              '0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
+              '0 25px 50px -12px rgba(0, 85, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
           }}
         >
           {navLinks.map((l) => (
@@ -120,7 +120,7 @@ export default function Navbar() {
               href={l.href}
               className={`text-[15px] font-bold px-4 py-3 rounded-2xl transition-colors ${
                 pathname === l.href
-                  ? 'bg-slate-900 text-white shadow-sm'
+                  ? 'bg-[#0055ff] text-white shadow-md'
                   : 'text-slate-700 hover:bg-white/80'
               }`}
               onClick={() => setMobileOpen(false)}

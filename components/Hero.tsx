@@ -26,8 +26,8 @@ export default function Hero() {
         {/* ── LEFT COLUMN: Editorial Headline & Form (Span 6) ── */}
         <div className="lg:col-span-6 space-y-6">
           
-          {/* Eyebrow Pill with Entrance Animation */}
-          <div className="anim-badge inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-[0.16em] text-slate-700 border border-slate-200/90 rounded-full px-4 py-2 bg-white/85 shadow-sm backdrop-blur-md">
+          {/* Eyebrow Pill (Secondary White base + Primary Blue accents) */}
+          <div className="anim-badge inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-[0.16em] text-slate-700 border border-slate-200/90 rounded-full px-4 py-2 bg-white shadow-sm backdrop-blur-md">
             <span className="w-2 h-2 rounded-full bg-[#0055ff] animate-pulse" />
             <span className="hover-highlight">SWIFT ALLIANCE</span>
             <span className="text-slate-300">/</span>
@@ -48,16 +48,16 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Subheading with Entrance Animation */}
+          {/* Subheading */}
           <p className="anim-desc text-[clamp(15px,1.15vw,18px)] text-slate-600 leading-relaxed max-w-[540px] font-normal">
             Authorized CISA-certified auditors assessing your mandatory CSCF v2026 controls, engineering the technical remediation, and submitting your attestation to the SWIFT KYC Security Registry with{' '}
             <strong className="text-slate-900 font-bold hover-highlight">guaranteed first-pass approval</strong>.
           </p>
 
-          {/* BIC Form with Entrance Animation */}
+          {/* BIC Form: Secondary White container + Primary Blue CTA button */}
           <div className="anim-form space-y-3 pt-1">
             <form onSubmit={handleAuditSubmit} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 max-w-[540px]">
-              <div className="flex-1 flex items-center gap-3 bg-white border border-slate-300 focus-within:border-[#0055ff] focus-within:ring-4 focus-within:ring-[#0055ff]/10 rounded-full px-5 py-3 transition-all shadow-sm">
+              <div className="flex-1 flex items-center gap-3 bg-white border border-slate-300 focus-within:border-[#0055ff] focus-within:ring-4 focus-within:ring-[#0055ff]/15 rounded-full px-5 py-3 transition-all shadow-sm">
                 <input
                   type="text"
                   value={website}
@@ -68,7 +68,7 @@ export default function Hero() {
               </div>
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 bg-[#0a0e1a] hover:bg-[#0055ff] text-white font-bold text-[13px] px-7 py-3 rounded-full transition-all duration-300 whitespace-nowrap shadow-md hover:shadow-lg group"
+                className="inline-flex items-center justify-center gap-2 bg-[#0055ff] hover:bg-[#0048e5] text-white font-bold text-[13px] px-8 py-3.5 rounded-full transition-all duration-300 whitespace-nowrap shadow-[0_4px_16px_rgba(0,85,255,0.35)] hover:shadow-lg group"
               >
                 <span>Free Audit</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -76,8 +76,8 @@ export default function Hero() {
             </form>
 
             <div className="flex items-center gap-3 text-[10px] font-mono text-slate-400 uppercase tracking-widest pl-1">
-              <span className="flex items-center gap-1.5 text-emerald-600 font-bold hover-highlight-emerald">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              <span className="flex items-center gap-1.5 text-[#0055ff] font-bold hover-highlight">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0055ff]" />
                 CSCF v2026 Audit Ready
               </span>
               <span>·</span>
@@ -85,12 +85,12 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Metrics bar with Entrance Animation */}
+          {/* Metrics bar: Secondary White background cards with Primary Blue accents */}
           <div className="anim-stats flex flex-wrap items-center gap-0 pt-5 border-t border-slate-200/80 max-w-[580px]">
             {[
               { label: 'TRACK RECORD', val: '100% Pass Rate', color: 'text-[#0055ff]' },
               { label: 'EXPERIENCE', val: '15+ Years Active', color: 'text-slate-900' },
-              { label: 'GLOBAL HUBS', val: '4 Regional Hubs', color: 'text-[#d97706]' },
+              { label: 'GLOBAL HUBS', val: '4 Regional Hubs', color: 'text-[#0055ff]' },
             ].map((m, i) => (
               <div key={i} className="flex items-center">
                 <div className="pr-5 md:pr-8">
@@ -103,7 +103,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: Interactive Company Hub Map with Entrance Animation (Span 6) ── */}
+        {/* ── RIGHT COLUMN: Interactive Company Hub Map (Span 6) ── */}
         <div className="anim-map lg:col-span-6 w-full flex items-center justify-center">
           <CompanyHubMap />
         </div>
