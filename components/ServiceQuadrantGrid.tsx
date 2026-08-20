@@ -59,17 +59,17 @@ const services: ServiceQuadrant[] = [
 
 export default function ServiceQuadrantGrid() {
   return (
-    <section className="px-6 md:px-12 lg:px-16 py-36 md:py-44 max-w-[1720px] mx-auto">
+    <section className="px-6 md:px-12 lg:px-16 py-32 md:py-44 max-w-[1720px] mx-auto">
       {/* Section Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 home-reveal">
         <div className="space-y-4 max-w-3xl">
           <div className="section-head">
-            <span className="section-num">(03)</span>
+            <span className="section-num">(02)</span>
             <span>SOLUTIONS & SYSTEMS ARCHITECTURE</span>
           </div>
           <h2 className="text-[clamp(32px,4.5vw,60px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.08]">
             Infrastructure & Audit Systems{' '}
-            <span className="font-serif italic font-normal text-[#0055ff]">Built for Scale.</span>
+            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Built for Scale.</span>
           </h2>
         </div>
         <div className="space-y-3 max-w-md">

@@ -21,13 +21,13 @@ const hubs = [
   {
     id: 'nairobi-kenya',
     name: 'Nairobi, Kenya',
-    address: 'Mayfair Suites, Westlands',
+    address: 'Mayfair Suites',
     coordinates: [36.8219, -1.2921] as [number, number],
   },
   {
     id: 'bengaluru-india',
     name: 'Bengaluru, India',
-    address: 'Vaishnavi BVS Senate',
+    address: 'Vaishnavi BVS Senate | Development Center',
     coordinates: [77.5946, 12.9716] as [number, number],
   },
 ];
@@ -45,16 +45,17 @@ export default function CompanyHubMap() {
 
   return (
     <section className="relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
-      <div className="relative aspect-[16/8.5] w-full min-h-[260px] sm:min-h-[300px]">
+      <div className="relative h-[clamp(360px,42vw,480px)] w-full">
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{
-            scale: 145,
-            center: [10, 14],
+            scale: 205,
+            center: [10, 12],
           }}
           width={1200}
           height={600}
-          className="h-full w-full"
+          className="block h-full w-full"
+          style={{ width: '100%', height: '100%' }}
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -70,8 +71,8 @@ export default function CompanyHubMap() {
                       key={geo.rsmKey}
                       geography={geo}
                       fill={isHighlighted ? '#4D82D2' : '#FFFFFF'}
-                      stroke="#D9E0EA"
-                      strokeWidth={0.55}
+                      stroke="#64748B"
+                      strokeWidth={isHighlighted ? 0.8 : 1.25}
                       style={{
                         default: { outline: 'none' },
                         hover: {
@@ -98,15 +99,15 @@ export default function CompanyHubMap() {
                 tabIndex={0}
                 aria-label={`View ${hub.name} details`}
               >
-                <circle r={13} fill="#DC2626" opacity={0.2} />
-                <circle r={7} fill="#DC2626" stroke="#FFFFFF" strokeWidth={2} />
+                <circle r={15} fill="#DC2626" opacity={0.2} />
+                <circle r={8} fill="#DC2626" stroke="#FFFFFF" strokeWidth={2} />
                 <text
                   textAnchor="middle"
-                  y={3.5}
+                  y={4}
                   style={{
                     fontFamily: 'system-ui',
                     fill: '#FFFFFF',
-                    fontSize: 7,
+                    fontSize: 8,
                     fontWeight: 700,
                   }}
                 >
@@ -118,45 +119,40 @@ export default function CompanyHubMap() {
         </ComposableMap>
 
         {activeHub && (
-          <div className="absolute right-3 top-3 z-10 max-w-[240px] rounded-xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur">
+          <div className="absolute right-4 top-4 z-10 max-w-xs rounded-xl border border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur">
             <button
               type="button"
               onClick={() => setActiveHub(null)}
-              className="absolute right-2.5 top-1.5 text-lg leading-none text-gray-400 hover:text-gray-900"
+              className="absolute right-3 top-2 text-xl leading-none text-slate-500 hover:text-slate-900"
               aria-label="Close hub details"
             >
               ×
             </button>
-            <p className="pr-4 font-bold text-xs text-gray-900">{activeHub.name}</p>
-            <p className="mt-0.5 text-[11px] text-gray-600 leading-tight">{activeHub.address}</p>
+            <p className="pr-5 font-semibold text-slate-900">{activeHub.name}</p>
+            <p className="mt-1 text-sm text-slate-600">{activeHub.address}</p>
           </div>
         )}
       </div>
 
-      <div className="border-t border-slate-200 bg-slate-50/60 p-3.5 sm:p-4">
-        <div className="flex items-center justify-between pb-2">
-          <span className="font-mono text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            FinoWorks Global Operations
-          </span>
-          <span className="font-mono text-[10px] font-bold text-[#0055ff]">
-            3 Primary Hubs
-          </span>
-        </div>
+      <div className="border-t border-slate-200 bg-white p-4 sm:p-5">
+        <h2 className="text-base font-bold text-slate-900">
+          Office & Center Details
+        </h2>
 
-        <div className="grid gap-2 sm:grid-cols-3">
+        <div className="mt-3 grid gap-3 sm:grid-cols-3">
           {hubs.map((hub, index) => (
             <button
               key={hub.id}
               type="button"
               onClick={() => setActiveHub(hub)}
-              className="flex items-center gap-2 rounded-lg p-2 text-left transition hover:bg-white bg-white/80 border border-slate-200/80 shadow-xs"
+              className="flex items-start gap-2.5 rounded-lg p-2 text-left transition hover:bg-slate-50 border border-slate-100"
             >
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-600 text-xs font-semibold text-white">
                 {index + 1}
               </span>
-              <span className="truncate">
-                <span className="block text-[11px] font-bold text-gray-900 truncate">{hub.name}</span>
-                <span className="block text-[9px] text-gray-500 truncate leading-tight font-mono">
+              <span>
+                <span className="block text-xs font-bold text-slate-900">{hub.name}</span>
+                <span className="mt-0.5 block text-[11px] text-slate-600">
                   {hub.address}
                 </span>
               </span>

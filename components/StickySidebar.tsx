@@ -36,18 +36,18 @@ export default function StickySidebar() {
   ];
 
   return (
-    <section className="px-6 md:px-12 lg:px-16 py-36 md:py-48 max-w-[1720px] mx-auto">
+    <section className="px-6 md:px-12 lg:px-16 py-32 md:py-44 max-w-[1720px] mx-auto">
       <div className="sticky-split">
         {/* Left Sticky Column */}
         <div className="sticky-aside space-y-8 home-reveal">
           <div className="section-head">
-            <span className="section-num">(04)</span>
+            <span className="section-num">(03)</span>
             <span>ENGAGEMENT LIFECYCLE</span>
           </div>
 
           <h2 className="text-[clamp(34px,4.5vw,58px)] font-extrabold text-[#0a0e1a] leading-[1.08] tracking-tight">
             Evidence first. <br />
-            <span className="font-serif italic font-normal text-[#0055ff]">Then engineering.</span>
+            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Then engineering.</span>
           </h2>
 
           <p className="text-base text-slate-600 leading-relaxed max-w-md font-normal">

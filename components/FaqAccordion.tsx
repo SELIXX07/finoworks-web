@@ -25,16 +25,16 @@ export default function FaqAccordion() {
   ];
 
   return (
-    <section className="px-6 md:px-12 lg:px-16 py-36 md:py-48 max-w-[1720px] mx-auto">
+    <section className="px-6 md:px-12 lg:px-16 py-32 md:py-44 max-w-[1720px] mx-auto">
       {/* Center Aligned Editorial Header */}
       <div className="text-center space-y-5 max-w-3xl mx-auto mb-20 home-reveal">
         <div className="section-head justify-center">
-          <span className="section-num">(05)</span>
+          <span className="section-num">(04)</span>
           <span>QUESTIONS, ANSWERED</span>
         </div>
         <h2 className="text-[clamp(34px,4.5vw,60px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.08]">
           Frequently Asked{' '}
-          <span className="font-serif italic font-normal text-[#0055ff]">Questions.</span>
+          <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Questions.</span>
         </h2>
         <p className="text-base text-slate-600 font-normal leading-relaxed">
           Clear, definitive answers regarding SWIFT CSP compliance, ISO 20022 cutover, and our independent assessment practice.
