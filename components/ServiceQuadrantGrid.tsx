@@ -67,18 +67,18 @@ export default function ServiceQuadrantGrid() {
             <span className="section-num">(02)</span>
             <span>SOLUTIONS & SYSTEMS ARCHITECTURE</span>
           </div>
-          <h2 className="text-[clamp(32px,4.5vw,60px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.08]">
+          <h2 className="text-[clamp(32px,4.5vw,60px)] font-extrabold text-white tracking-tight leading-[1.08]">
             Infrastructure & Audit Systems{' '}
-            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Built for Scale.</span>
+            <span className="font-serif italic font-normal text-[#00e5ff] hover-highlight">Built for Scale.</span>
           </h2>
         </div>
         <div className="space-y-3 max-w-md">
-          <p className="text-sm md:text-base text-slate-600 font-normal leading-relaxed">
+          <p className="text-sm md:text-base text-slate-300 font-normal leading-relaxed">
             Enterprise systems engineered for financial institutions: SWIFT CSP audits, ISO 20022 message conversion, payment middleware, and threat risk software.
           </p>
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#0055ff] hover:underline"
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#00e5ff] hover:underline"
           >
             <span>View all 11 individual practice pages</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -87,20 +87,20 @@ export default function ServiceQuadrantGrid() {
       </div>
 
       {/* 2x2 Quadrant Grid */}
-      <div className="quad-grid home-reveal shadow-xl">
+      <div className="quad-grid home-reveal shadow-2xl">
         {services.map((svc, idx) => (
           <Link
             key={idx}
             href={`/services/${svc.slug}`}
-            className={`quad-card ${svc.themeClass} group cursor-pointer block`}
+            className={`quad-card ${svc.themeClass} group cursor-pointer block border border-blue-500/20`}
           >
             <div>
-              <div className="flex justify-between items-center pb-5 border-b border-current/10">
+              <div className="flex justify-between items-center pb-5 border-b border-white/10">
                 <span className="qc-num">{svc.num}</span>
                 <span className="qc-tag">{svc.tag}</span>
               </div>
 
-              <h3 className="qc-title group-hover:text-[#0055ff] transition-colors">{svc.title}</h3>
+              <h3 className="qc-title group-hover:text-[#00e5ff] transition-colors">{svc.title}</h3>
               <p className="text-sm leading-relaxed qc-soft mb-8 font-normal max-w-[500px]">
                 {svc.desc}
               </p>
@@ -108,16 +108,16 @@ export default function ServiceQuadrantGrid() {
               <ul className="space-y-2.5 text-xs md:text-sm qc-soft font-semibold">
                 {svc.bullets.map((b, bi) => (
                   <li key={bi} className="flex items-center gap-2.5">
-                    <span className="opacity-60">•</span>
+                    <span className="text-[#00e5ff]">•</span>
                     <span>{b}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="pt-10 mt-8 border-t border-current/10 flex justify-between items-center">
-              <span className="text-xs font-mono font-extrabold tracking-wider">{svc.pricing}</span>
-              <div className="w-11 h-11 rounded-full border border-current/20 flex items-center justify-center group-hover:bg-[#0055ff] group-hover:border-[#0055ff] group-hover:text-white transition-all shadow-sm">
+            <div className="pt-10 mt-8 border-t border-white/10 flex justify-between items-center">
+              <span className="text-xs font-mono font-extrabold tracking-wider text-blue-200">{svc.pricing}</span>
+              <div className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-[#0055ff] group-hover:border-[#0055ff] group-hover:text-white transition-all shadow-sm">
                 <ArrowUpRight className="w-4 h-4" />
               </div>
             </div>

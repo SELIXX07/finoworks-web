@@ -45,26 +45,26 @@ export default function StickySidebar() {
             <span>ENGAGEMENT LIFECYCLE</span>
           </div>
 
-          <h2 className="text-[clamp(34px,4.5vw,58px)] font-extrabold text-[#0a0e1a] leading-[1.08] tracking-tight">
+          <h2 className="text-[clamp(34px,4.5vw,58px)] font-extrabold text-white leading-[1.08] tracking-tight">
             Evidence first. <br />
-            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Then engineering.</span>
+            <span className="font-serif italic font-normal text-[#00e5ff] hover-highlight">Then engineering.</span>
           </h2>
 
-          <p className="text-base text-slate-600 leading-relaxed max-w-md font-normal">
+          <p className="text-base text-slate-300 leading-relaxed max-w-md font-normal">
             Most consultancies stop at discovering vulnerabilities. We engineer the fixes, update firewall configs, harden access zones, and sign off the official attestation.
           </p>
 
-          <div className="space-y-3.5 pt-2 text-xs font-mono text-slate-700 font-bold">
+          <div className="space-y-3.5 pt-2 text-xs font-mono text-blue-200 font-bold">
             <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-[#0055ff]" />
+              <CheckCircle2 className="w-4 h-4 text-[#00e5ff]" />
               <span>Full CISA-certified attestation report</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-[#0055ff]" />
+              <CheckCircle2 className="w-4 h-4 text-[#00e5ff]" />
               <span>Direct SWIFT KYC Registry upload</span>
             </div>
             <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-[#0055ff]" />
+              <CheckCircle2 className="w-4 h-4 text-[#00e5ff]" />
               <span>Zero-downtime cutover guarantee</span>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function StickySidebar() {
           <div className="pt-4">
             <Link
               href="/csp-assessment-v2026"
-              className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#0055ff] hover:text-[#0a0e1a] transition-colors"
+              className="inline-flex items-center gap-2 font-mono text-xs font-bold text-[#00e5ff] hover:text-white transition-colors"
             >
               <span>SCHEDULE AUDIT SIMULATION</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -81,14 +81,14 @@ export default function StickySidebar() {
         </div>
 
         {/* Right 2x2 Scrolling Grid */}
-        <div className="quad-grid home-reveal shadow-xl">
+        <div className="quad-grid home-reveal shadow-2xl">
           {steps.map((step, idx) => (
             <div
               key={idx}
-              className={`quad-card ${step.themeClass}`}
+              className={`quad-card ${step.themeClass} border border-blue-500/20`}
             >
               <div className="space-y-4">
-                <div className="flex justify-between items-center pb-4 border-b border-current/10">
+                <div className="flex justify-between items-center pb-4 border-b border-white/10">
                   <span className="qc-num">{step.num}</span>
                   <span className="qc-tag">{step.tag}</span>
                 </div>

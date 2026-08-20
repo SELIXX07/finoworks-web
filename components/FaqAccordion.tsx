@@ -32,17 +32,17 @@ export default function FaqAccordion() {
           <span className="section-num">(04)</span>
           <span>QUESTIONS, ANSWERED</span>
         </div>
-        <h2 className="text-[clamp(34px,4.5vw,60px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.08]">
+        <h2 className="text-[clamp(34px,4.5vw,60px)] font-extrabold text-white tracking-tight leading-[1.08]">
           Frequently Asked{' '}
-          <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Questions.</span>
+          <span className="font-serif italic font-normal text-[#00e5ff] hover-highlight">Questions.</span>
         </h2>
-        <p className="text-base text-slate-600 font-normal leading-relaxed">
+        <p className="text-base text-slate-300 font-normal leading-relaxed">
           Clear, definitive answers regarding SWIFT CSP compliance, ISO 20022 cutover, and our independent assessment practice.
         </p>
       </div>
 
       {/* Center Aligned Accordion Container */}
-      <div className="max-w-4xl mx-auto home-reveal">
+      <div className="max-w-4xl mx-auto home-reveal bg-[#051438]/50 p-6 md:p-10 rounded-[32px] border border-blue-500/20 shadow-2xl backdrop-blur-md">
         {faqs.map((faq, idx) => (
           <details key={idx} className="faq-item group">
             <summary className="faq-summary">

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Clock } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 
 export default function InsightsPage() {
   const articles = [
@@ -10,8 +10,7 @@ export default function InsightsPage() {
       date: 'Aug 2026',
       readTime: '8 min read',
       tag: 'COMPLIANCE',
-      theme: 'bg-[#fbf6ec] border-[#f0e6d2] text-[#18130c]',
-      tagStyle: 'text-[#d97706] bg-[#fef3c7] border-[#fde68a]',
+      theme: 'bg-[#061942] border-blue-500/30 text-white',
     },
     {
       slug: 'iso-20022-cbpr-plus-cutover-strategy',
@@ -20,8 +19,7 @@ export default function InsightsPage() {
       date: 'Jul 2026',
       readTime: '6 min read',
       tag: 'PAYMENT TECH',
-      theme: 'bg-[#0b0f19] border-[#1f293d] text-[#f9fafb]',
-      tagStyle: 'text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30',
+      theme: 'bg-[#082156] border-blue-400/40 text-white',
     },
     {
       slug: 'active-active-dr-swift-alliance',
@@ -30,8 +28,7 @@ export default function InsightsPage() {
       date: 'Jun 2026',
       readTime: '10 min read',
       tag: 'INFRASTRUCTURE',
-      theme: 'bg-[#eff6ff] border-[#dbeafe] text-[#081120]',
-      tagStyle: 'text-[#0055ff] bg-[#0055ff]/10 border-[#0055ff]/20',
+      theme: 'bg-[#0a2b6e] border-blue-400/40 text-white',
     },
   ];
 
@@ -41,17 +38,17 @@ export default function InsightsPage() {
         
         {/* Header */}
         <div className="space-y-6 max-w-4xl home-reveal">
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-mono font-bold">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#0055ff] animate-pulse" />
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[#082156] border border-blue-500/40 shadow-sm text-xs font-mono font-bold text-white">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#00e5ff] animate-pulse" />
             <span>KNOWLEDGE BASE & RESEARCH</span>
           </div>
 
-          <h1 className="text-[clamp(38px,5.4vw,76px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.06]">
+          <h1 className="text-[clamp(38px,5.4vw,76px)] font-extrabold text-white tracking-tight leading-[1.06]">
             Technical Insights &{' '}
-            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Briefings.</span>
+            <span className="font-serif italic font-normal text-[#00e5ff] hover-highlight">Briefings.</span>
           </h1>
 
-          <p className="text-[clamp(16px,1.35vw,20px)] text-slate-600 leading-relaxed font-normal">
+          <p className="text-[clamp(16px,1.35vw,20px)] text-slate-300 leading-relaxed font-normal">
             Deep technical analyses, regulatory guidance, and architecture runbooks written by practicing SWIFT infrastructure architects and CISA auditors.
           </p>
         </div>
@@ -61,31 +58,31 @@ export default function InsightsPage() {
           {articles.map((art, idx) => (
             <div
               key={idx}
-              className={`p-9 md:p-10 rounded-[32px] border ${art.theme} shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between space-y-8`}
+              className={`p-9 md:p-10 rounded-[32px] border ${art.theme} shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between space-y-8`}
             >
               <div className="space-y-5">
-                <div className="flex justify-between items-center pb-4 border-b border-current/10">
-                  <span className={`font-mono text-[10px] font-bold px-3 py-1 rounded-full border ${art.tagStyle}`}>
+                <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                  <span className="font-mono text-[10px] font-bold px-3 py-1 rounded-full border border-blue-400/40 bg-[#00e5ff]/10 text-[#00e5ff]">
                     {art.tag}
                   </span>
-                  <div className="flex items-center gap-1.5 text-xs font-mono opacity-60 font-medium">
+                  <div className="flex items-center gap-1.5 text-xs font-mono text-blue-200 font-medium">
                     <Clock className="w-3.5 h-3.5" />
                     <span>{art.readTime}</span>
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-extrabold leading-snug tracking-tight">
+                <h3 className="text-2xl font-extrabold leading-snug tracking-tight text-white">
                   {art.title}
                 </h3>
 
-                <p className="text-xs md:text-sm leading-relaxed opacity-80 font-normal">
+                <p className="text-xs md:text-sm leading-relaxed text-slate-300 font-normal">
                   {art.desc}
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-current/10 flex justify-between items-center text-xs font-bold">
+              <div className="pt-6 border-t border-white/10 flex justify-between items-center text-xs font-bold text-blue-200">
                 <span className="opacity-60">{art.date}</span>
-                <span className="flex items-center gap-1 hover:text-[#0055ff] transition-colors">
+                <span className="flex items-center gap-1 hover:text-[#00e5ff] transition-colors">
                   <span>Read Briefing</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </span>
