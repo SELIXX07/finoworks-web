@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import LenisProvider from '@/components/LenisProvider';
-import Cursor from '@/components/Cursor';
 import Preloader from '@/components/Preloader';
 import StarfieldGrain from '@/components/StarfieldGrain';
 import ScrollProgress from '@/components/ScrollProgress';
@@ -31,11 +30,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased selection:bg-electric-500 selection:text-white bg-white text-navy-900">
+      <body className="antialiased selection:bg-[#0055ff] selection:text-white bg-white text-slate-900">
         <Preloader />
         <ScrollProgress />
         <StarfieldGrain />
-        <Cursor />
         <LenisProvider>
           <Navbar />
           <main className="relative z-10">{children}</main>

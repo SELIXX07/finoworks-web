@@ -54,13 +54,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Cursor */
-@media (hover: hover) and (pointer: fine) {
-  body.has-custom-cursor,
-  body.has-custom-cursor a,
-  body.has-custom-cursor button { cursor: none !important; }
-}
-
 ::selection { background: #0055ff; color: #ffffff; }
 
 /* Custom Scrollbar */
