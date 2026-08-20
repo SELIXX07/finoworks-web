@@ -29,10 +29,10 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
+    { label: 'Home', href: '/' },
     { label: 'Services', href: '/services' },
-    { label: 'ISO 20022', href: '/iso-20022-migration' },
-    { label: 'CSP v2026', href: '/csp-assessment-v2026' },
-    { label: 'About', href: '/about-us' },
+    { label: 'Insights', href: '/insights' },
+    { label: 'About Us', href: '/about-us' },
     { label: 'Contact', href: '/contact-us' },
   ];
 
@@ -53,13 +53,13 @@ export default function Navbar() {
           finoworks<span className="text-[#0055ff]">.</span>
         </Link>
 
-        {/* Center Nav */}
+        {/* Center Nav: Home, Services, Insights, About Us, Contact */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] text-slate-600 hover:text-slate-900 transition-colors font-semibold"
+              className="text-[13px] text-slate-600 hover:text-slate-900 transition-colors font-bold"
             >
               {l.label}
             </Link>

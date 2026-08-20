@@ -11,6 +11,7 @@ interface ServiceQuadrant {
   bullets: string[];
   pricing: string;
   themeClass: string;
+  slug: string;
 }
 
 const services: ServiceQuadrant[] = [
@@ -22,6 +23,7 @@ const services: ServiceQuadrant[] = [
     bullets: ['32 Mandatory CSCF Controls', 'Mock Audit & Penetration Testing', 'KYC Registry Evidence Pack', '100% Attestation Approval'],
     pricing: 'Fixed Scope Audit',
     themeClass: 'qc-cream',
+    slug: 'csp-assessment-v2026',
   },
   {
     num: '02',
@@ -31,6 +33,7 @@ const services: ServiceQuadrant[] = [
     bullets: ['Zero Data Truncation Guarantee', 'CBPR+ & MyStandards Validation', 'Core Banking Adapter Pipeline', 'Real-Time Schema Validation'],
     pricing: 'Software & Integration',
     themeClass: 'qc-dark',
+    slug: 'iso-20022-migration',
   },
   {
     num: '03',
@@ -40,6 +43,7 @@ const services: ServiceQuadrant[] = [
     bullets: ['SIL to AutoClient Modernization', 'Active-Active DR Failover', 'Real-Time RMA Surveillance', 'Multi-Rail Core Adapter'],
     pricing: 'Enterprise Middleware',
     themeClass: 'qc-ice',
+    slug: 'swift-integration',
   },
   {
     num: '04',
@@ -49,6 +53,7 @@ const services: ServiceQuadrant[] = [
     bullets: ['Real-Time SAA Log Auditing', 'Automated Vulnerability Scanner', 'Central Bank Export Reports', 'Custom Bank White-Labeling'],
     pricing: 'Annual License',
     themeClass: 'qc-amber',
+    slug: 'white-labeled-risk-software',
   },
 ];
 
@@ -66,32 +71,39 @@ export default function ServiceQuadrantGrid() {
             Infrastructure & Audit Systems Built for Scale.
           </h2>
         </div>
-        <p className="text-sm text-slate-600 max-w-md font-normal leading-relaxed">
-          Offers engineered for financial institutions: SWIFT CSP audit, ISO 20022 message conversion, payment middleware, and threat risk tools.
-        </p>
+        <div className="space-y-2 max-w-md">
+          <p className="text-sm text-slate-600 font-normal leading-relaxed">
+            Offers engineered for financial institutions: SWIFT CSP audit, ISO 20022 message conversion, payment middleware, and threat risk tools.
+          </p>
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0055ff] hover:underline"
+          >
+            <span>View all 11 individual practice pages</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* 2x2 Quadrant Grid */}
       <div className="quad-grid home-reveal shadow-lg">
         {services.map((svc, idx) => (
-          <div
+          <Link
             key={idx}
-            className={`quad-card ${svc.themeClass}`}
+            href={`/services/${svc.slug}`}
+            className={`quad-card ${svc.themeClass} group cursor-pointer block`}
           >
             <div>
-              {/* Card Meta Top */}
               <div className="flex justify-between items-center pb-4 border-b border-current/10">
                 <span className="qc-num">{svc.num}</span>
                 <span className="qc-tag">{svc.tag}</span>
               </div>
 
-              {/* Title & Desc */}
-              <h3 className="qc-title">{svc.title}</h3>
+              <h3 className="qc-title group-hover:text-[#0055ff] transition-colors">{svc.title}</h3>
               <p className="text-xs md:text-sm leading-relaxed qc-soft mb-6 font-normal">
                 {svc.desc}
               </p>
 
-              {/* Bullet list */}
               <ul className="space-y-2 text-xs qc-soft font-semibold">
                 {svc.bullets.map((b, bi) => (
                   <li key={bi} className="flex items-center gap-2">
@@ -102,18 +114,13 @@ export default function ServiceQuadrantGrid() {
               </ul>
             </div>
 
-            {/* Bottom pricing + link */}
             <div className="pt-8 mt-6 border-t border-current/10 flex justify-between items-center">
               <span className="text-xs font-mono font-bold tracking-wider">{svc.pricing}</span>
-              <Link
-                href="/services"
-                className="w-9 h-9 rounded-full border border-current/20 flex items-center justify-center hover:bg-current/10 transition-colors"
-                aria-label={`View ${svc.title}`}
-              >
+              <div className="w-9 h-9 rounded-full border border-current/20 flex items-center justify-center group-hover:bg-[#0055ff] group-hover:border-[#0055ff] group-hover:text-white transition-all">
                 <ArrowUpRight className="w-4 h-4" />
-              </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
