@@ -21,13 +21,13 @@ const hubs = [
   {
     id: 'nairobi-kenya',
     name: 'Nairobi, Kenya',
-    address: 'Mayfair Suites',
+    address: 'Mayfair Suites, Westlands',
     coordinates: [36.8219, -1.2921] as [number, number],
   },
   {
     id: 'bengaluru-india',
     name: 'Bengaluru, India',
-    address: 'Vaishnavi BVS Senate | Development Center',
+    address: 'Vaishnavi BVS Senate',
     coordinates: [77.5946, 12.9716] as [number, number],
   },
 ];
@@ -44,13 +44,13 @@ export default function CompanyHubMap() {
   const [activeHub, setActiveHub] = useState<Hub | null>(null);
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
-      <div className="relative aspect-[16/8] w-full min-h-[360px]">
+    <section className="relative w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg">
+      <div className="relative aspect-[16/8.5] w-full min-h-[260px] sm:min-h-[300px]">
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{
             scale: 145,
-            center: [10, 12],
+            center: [10, 14],
           }}
           width={1200}
           height={600}
@@ -118,40 +118,45 @@ export default function CompanyHubMap() {
         </ComposableMap>
 
         {activeHub && (
-          <div className="absolute right-4 top-4 z-10 max-w-xs rounded-xl border border-gray-200 bg-white/95 p-4 shadow-lg backdrop-blur">
+          <div className="absolute right-3 top-3 z-10 max-w-[240px] rounded-xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur">
             <button
               type="button"
               onClick={() => setActiveHub(null)}
-              className="absolute right-3 top-2 text-xl leading-none text-gray-500 hover:text-gray-900"
+              className="absolute right-2.5 top-1.5 text-lg leading-none text-gray-400 hover:text-gray-900"
               aria-label="Close hub details"
             >
               ×
             </button>
-            <p className="pr-5 font-semibold text-gray-900">{activeHub.name}</p>
-            <p className="mt-1 text-sm text-gray-600">{activeHub.address}</p>
+            <p className="pr-4 font-bold text-xs text-gray-900">{activeHub.name}</p>
+            <p className="mt-0.5 text-[11px] text-gray-600 leading-tight">{activeHub.address}</p>
           </div>
         )}
       </div>
 
-      <div className="border-t border-gray-200 bg-white p-5 sm:p-6">
-        <h2 className="text-lg font-semibold text-gray-900">
-          Office & Center Details
-        </h2>
+      <div className="border-t border-slate-200 bg-slate-50/60 p-3.5 sm:p-4">
+        <div className="flex items-center justify-between pb-2">
+          <span className="font-mono text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+            FinoWorks Global Operations
+          </span>
+          <span className="font-mono text-[10px] font-bold text-[#0055ff]">
+            3 Primary Hubs
+          </span>
+        </div>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-2 sm:grid-cols-3">
           {hubs.map((hub, index) => (
             <button
               key={hub.id}
               type="button"
               onClick={() => setActiveHub(hub)}
-              className="flex items-start gap-3 rounded-lg p-2 text-left transition hover:bg-gray-50"
+              className="flex items-center gap-2 rounded-lg p-2 text-left transition hover:bg-white bg-white/80 border border-slate-200/80 shadow-xs"
             >
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-600 text-sm font-semibold text-white">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white">
                 {index + 1}
               </span>
-              <span>
-                <span className="block font-medium text-gray-900">{hub.name}</span>
-                <span className="mt-1 block text-sm text-gray-600">
+              <span className="truncate">
+                <span className="block text-[11px] font-bold text-gray-900 truncate">{hub.name}</span>
+                <span className="block text-[9px] text-gray-500 truncate leading-tight font-mono">
                   {hub.address}
                 </span>
               </span>
