@@ -56,10 +56,10 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Massive Display Watermark Typography */}
+      {/* Massive Display Watermark Typography: FinoWorks Technologies */}
       <div className="py-12 select-none overflow-hidden border-t border-slate-200/60">
-        <h1 className="text-[clamp(44px,14vw,220px)] font-black tracking-tighter leading-none text-slate-900/[0.05] hover:text-slate-900/[0.10] transition-colors">
-          FinoWorks <span className="font-serif italic font-normal text-[#0055ff]/25">Tech</span>
+        <h1 className="text-[clamp(40px,12.5vw,195px)] font-black tracking-tighter leading-none text-slate-900/[0.05] hover:text-slate-900/[0.10] transition-colors">
+          FinoWorks <span className="font-serif italic font-normal text-[#0055ff]/25">Technologies</span>
         </h1>
       </div>
 
