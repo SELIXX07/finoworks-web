@@ -25,27 +25,28 @@ export default function FaqAccordion() {
   ];
 
   return (
-    <section className="px-6 md:px-8 py-28 max-w-[1600px] mx-auto">
-      {/* Center Aligned Header */}
-      <div className="text-center space-y-4 max-w-2xl mx-auto mb-14 home-reveal">
+    <section className="px-6 md:px-12 lg:px-16 py-36 md:py-48 max-w-[1720px] mx-auto">
+      {/* Center Aligned Editorial Header */}
+      <div className="text-center space-y-5 max-w-3xl mx-auto mb-20 home-reveal">
         <div className="section-head justify-center">
           <span className="section-num">(05)</span>
           <span>QUESTIONS, ANSWERED</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
-          Frequently Asked Questions.
+        <h2 className="text-[clamp(34px,4.5vw,60px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.08]">
+          Frequently Asked{' '}
+          <span className="font-serif italic font-normal text-[#0055ff]">Questions.</span>
         </h2>
-        <p className="text-sm text-slate-600 font-normal">
-          Clear answers regarding SWIFT CSP compliance, ISO 20022 cutover, and our independent assessment practice.
+        <p className="text-base text-slate-600 font-normal leading-relaxed">
+          Clear, definitive answers regarding SWIFT CSP compliance, ISO 20022 cutover, and our independent assessment practice.
         </p>
       </div>
 
       {/* Center Aligned Accordion Container */}
-      <div className="max-w-3xl mx-auto home-reveal">
+      <div className="max-w-4xl mx-auto home-reveal">
         {faqs.map((faq, idx) => (
           <details key={idx} className="faq-item group">
             <summary className="faq-summary">
-              <span className="pr-4">{faq.q}</span>
+              <span className="pr-6 leading-snug">{faq.q}</span>
               <span className="faq-icon font-mono">
                 +
               </span>
