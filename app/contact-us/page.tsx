@@ -1,32 +1,23 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
+import { ArrowRight, Mail, Phone, MapPin, CheckCircle2, ShieldCheck } from 'lucide-react';
 
 function ContactFormInner() {
   const searchParams = useSearchParams();
-  const [submitted, setSubmitted] = useState(false);
+  const initialBic = searchParams.get('bic') || '';
+  const initialService = searchParams.get('service') || 'SWIFT CSP v2026 Assessment';
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     institution: '',
-    service: 'SWIFT CSP v2026 Assessment',
-    timeSlot: '10:00 UTC (EMEA / East Africa)',
+    bic: initialBic,
+    service: initialService,
     message: '',
   });
-
-  useEffect(() => {
-    const bicParam = searchParams.get('bic');
-    const serviceParam = searchParams.get('service');
-    if (bicParam || serviceParam) {
-      setFormData((prev) => ({
-        ...prev,
-        institution: bicParam ? `BIC / Institution: ${bicParam}` : prev.institution,
-        service: serviceParam || prev.service,
-      }));
-    }
-  }, [searchParams]);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,228 +25,181 @@ function ContactFormInner() {
   };
 
   return (
-    <div className="lg:col-span-7 bg-slate-50 p-8 md:p-12 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-      {!submitted ? (
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <h3 className="font-serif italic text-2xl md:text-3xl text-black font-normal">
-            Book Technical Assessment Window
-          </h3>
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+      {/* Contact Info (Span 5) */}
+      <div className="lg:col-span-5 space-y-8 p-10 md:p-12 rounded-[36px] bg-[#0b0f19] text-white border border-[#1f293d] shadow-2xl">
+        <div className="space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00e5ff]/10 border border-[#00e5ff]/30 text-[#00e5ff] text-xs font-mono font-bold">
+            <ShieldCheck className="w-4 h-4" />
+            <span>CONFIDENTIAL ENGAGEMENT</span>
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-800">Full Name</label>
-              <input
-                type="text"
-                required
-                placeholder="e.g. Sarah Connor"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors"
-              />
-            </div>
+          <h2 className="text-3xl font-extrabold tracking-tight">
+            Direct Principal Access.
+          </h2>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-800">Work Email</label>
-              <input
-                type="email"
-                required
-                placeholder="s.connor@bank.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors"
-              />
+          <p className="text-sm text-slate-300 leading-relaxed font-normal">
+            Your inquiry routes directly to our senior SWIFT solution architects and CISA lead auditors with complete NDA protection.
+          </p>
+        </div>
+
+        <div className="space-y-6 pt-4 border-t border-slate-800 text-sm">
+          <div className="flex items-start gap-4">
+            <Mail className="w-5 h-5 text-[#00e5ff] shrink-0 mt-1" />
+            <div>
+              <div className="font-mono text-xs text-slate-400 font-bold uppercase">Direct Email</div>
+              <div className="font-bold text-white mt-0.5">contact@finoworks.com</div>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-800">Financial Institution / Bank / BIC</label>
-            <input
-              type="text"
-              required
-              placeholder="e.g. Apex Commercial Bank or BIC: APEXKENAXXX"
-              value={formData.institution}
-              onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors"
-            />
+          <div className="flex items-start gap-4">
+            <MapPin className="w-5 h-5 text-[#00e5ff] shrink-0 mt-1" />
+            <div>
+              <div className="font-mono text-xs text-slate-400 font-bold uppercase">Global HQ</div>
+              <div className="font-bold text-white mt-0.5">Mayfair Suites, Westlands, Nairobi, Kenya</div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex items-start gap-4">
+            <MapPin className="w-5 h-5 text-[#00e5ff] shrink-0 mt-1" />
+            <div>
+              <div className="font-mono text-xs text-slate-400 font-bold uppercase">Engineering Facility</div>
+              <div className="font-bold text-white mt-0.5">Clayworks, Bannerghatta Rd, Bangalore, India</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Booking Form (Span 7) */}
+      <div className="lg:col-span-7 p-10 md:p-14 rounded-[36px] bg-white border border-slate-200 shadow-xl space-y-6">
+        {submitted ? (
+          <div className="text-center py-12 space-y-4">
+            <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-2xl font-extrabold text-[#0a0e1a]">Inquiry Received.</h3>
+            <p className="text-sm text-slate-600 max-w-md mx-auto">
+              Our principal SWIFT architect will contact you within 24 business hours to deliver your preliminary scope and NDA.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold text-slate-700 uppercase">Your Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. John Doe"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold text-slate-700 uppercase">Corporate Email</label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="name@bank.com"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold text-slate-700 uppercase">Institution Name</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.institution}
+                  onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
+                  placeholder="Commercial Bank / Central Bank"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none transition-colors"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono font-bold text-slate-700 uppercase">SWIFT BIC (Optional)</label>
+                <input
+                  type="text"
+                  value={formData.bic}
+                  onChange={(e) => setFormData({ ...formData, bic: e.target.value })}
+                  placeholder="e.g. KCBLKENX"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none font-mono transition-colors"
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-800">Service Required</label>
+              <label className="text-xs font-mono font-bold text-slate-700 uppercase">Practice Area of Interest</label>
               <select
                 value={formData.service}
                 onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors"
+                className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none transition-colors"
               >
-                <option>SWIFT CSP v2026 Assessment</option>
-                <option>ISO 20022 MT to MX Migration</option>
-                <option>SWIFT Alliance Access Integration</option>
-                <option>Penetration Testing</option>
-                <option>Cyber Security Assessment</option>
-                <option>Payment Hub Enterprise Middleware</option>
+                <option value="SWIFT CSP v2026 Assessment">SWIFT CSP v2026 Independent Assessment</option>
+                <option value="ISO 20022 MT to MX Migration">ISO 20022 MT ↔ MX Message Converter</option>
+                <option value="SWIFT Alliance Access Integration">SWIFT Integration (SAA / SAG / AMH / Lite2)</option>
+                <option value="Enterprise Cyber Security Assessment">Enterprise Banking Cyber Security Assessment</option>
+                <option value="Penetration Testing & Red Teaming">Penetration Testing & Red Teaming</option>
+                <option value="White-Labeled Risk Software">White-Labeled Banking Risk Software</option>
+                <option value="Annual Managed Support SLA">SWIFT Annual Managed Support (24/7 SLA)</option>
               </select>
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-800">Preferred Time Slot (UTC)</label>
-              <select
-                value={formData.timeSlot}
-                onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors"
-              >
-                <option>08:00 UTC (EMEA / APAC)</option>
-                <option>10:00 UTC (EMEA / East Africa)</option>
-                <option>14:00 UTC (US East / Americas)</option>
-                <option>16:00 UTC (US West)</option>
-              </select>
+              <label className="text-xs font-mono font-bold text-slate-700 uppercase">Scope Overview</label>
+              <textarea
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Briefly describe your environment (e.g. SAA version, core banking system, target attestation date)..."
+                className="w-full bg-slate-50 border border-slate-300 focus:border-[#0055ff] rounded-2xl px-4 py-3.5 text-sm text-slate-900 outline-none transition-colors"
+              />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-slate-800">Brief Infrastructure Context</label>
-            <textarea
-              rows={4}
-              placeholder="Tell us about your core banking system, SWIFT architecture (SAA/SAG), or upcoming audit deadlines..."
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-xs focus:outline-none focus:border-[#0055ff] transition-colors resize-none"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-[#0055ff] hover:bg-black text-white font-bold py-4 rounded-full text-xs flex items-center justify-center gap-2 transition-all shadow-md"
-          >
-            <Send className="w-4 h-4" />
-            <span>Confirm Assessment Booking</span>
-          </button>
-        </form>
-      ) : (
-        <div className="py-12 text-center space-y-6">
-          <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-            <CheckCircle2 className="w-8 h-8" />
-          </div>
-          <h3 className="font-serif italic text-3xl text-black">Consultation Confirmed</h3>
-          <p className="text-xs text-slate-600 max-w-md mx-auto leading-relaxed">
-            Thank you, <strong>{formData.name}</strong>. A calendar invite for <strong>{formData.timeSlot}</strong> and an introductory SWIFT scoping checklist have been dispatched to <strong>{formData.email}</strong>.
-          </p>
-          <button
-            onClick={() => setSubmitted(false)}
-            className="text-xs font-bold text-[#0055ff] hover:underline"
-          >
-            Book another session
-          </button>
-        </div>
-      )}
+            <button
+              type="submit"
+              className="w-full bg-[#0a0e1a] hover:bg-[#0055ff] text-white font-bold py-4 rounded-2xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg group"
+            >
+              <span>Submit Assessment Scope Request</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }
 
-export default function ContactUsPage() {
+export default function ContactPage() {
   return (
-    <div className="pt-32 pb-24 bg-white min-h-screen">
-      <div className="max-w-[1600px] mx-auto px-6 md:px-8 space-y-16">
-        <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-black text-xs font-mono font-bold">
-            <span className="w-2 h-2 rounded-full bg-[#0055ff]" />
-            <span>SCHEDULE A TECHNICAL CONSULTATION</span>
+    <div className="pt-36 pb-36 min-h-screen">
+      <div className="max-w-[1720px] mx-auto px-6 md:px-12 lg:px-16 space-y-20">
+        <div className="space-y-6 max-w-4xl home-reveal">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-mono font-bold">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0055ff] animate-pulse" />
+            <span>CONFIDENTIAL CONSULTATION</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight">
-            Connect With SWIFT & Security Specialists.
+
+          <h1 className="text-[clamp(38px,5.4vw,76px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.06]">
+            Initiate Assessment &{' '}
+            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Scope.</span>
           </h1>
-          <p className="text-base text-slate-600 leading-relaxed">
-            Whether you need an independent CSP v2026 assessment, ISO 20022 migration support, or penetration testing, our CISA-certified team is ready.
+
+          <p className="text-[clamp(16px,1.35vw,20px)] text-slate-600 leading-relaxed font-normal">
+            Connect with our lead CISA assessors and principal SWIFT engineers for confidential scope definition and gap analysis.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-          <Suspense fallback={<div className="lg:col-span-7 bg-slate-50 p-12 rounded-3xl border border-slate-200 font-mono text-xs">Loading form...</div>}>
-            <ContactFormInner />
-          </Suspense>
-
-          {/* Right Column: Global Office Direct Directory (Span 5) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="p-8 rounded-3xl bg-black text-white space-y-6 shadow-xl">
-              <h3 className="font-serif italic text-2xl font-normal">Global Contact Directory</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Direct contact channels for technical emergencies, audit inquiries, and strategic banking alliances.
-              </p>
-
-              <div className="space-y-4 pt-2 text-xs">
-                <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-[#00d2ff] shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-mono text-slate-400 text-[10px] uppercase">Official Inquiries</div>
-                    <div className="font-bold text-white">contact@finoworks.com</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-[#00d2ff] shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-mono text-slate-400 text-[10px] uppercase">East Africa HQ Direct</div>
-                    <div className="font-bold text-white">+254 20 523 0000</div>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <Clock className="w-4 h-4 text-[#00d2ff] shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-mono text-slate-400 text-[10px] uppercase">Support Coverage</div>
-                    <div className="font-bold text-white">24/7 Global NOC & Standby Engineers</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* 4 Office Locations */}
-            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200 space-y-6">
-              <h4 className="font-serif italic text-xl text-black">Global Hubs & Facilities</h4>
-
-              <div className="space-y-4 text-xs">
-                <div className="space-y-1">
-                  <div className="font-bold text-black flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#0055ff]" />
-                    <span>Nairobi Corporate HQ</span>
-                  </div>
-                  <p className="text-slate-500 pl-5 leading-relaxed">
-                    Mayfair Suites, Parklands / Mpaka Rd, Westlands, Nairobi, Kenya
-                  </p>
-                </div>
-
-                <div className="space-y-1 pt-2 border-t border-slate-200">
-                  <div className="font-bold text-black flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#0055ff]" />
-                    <span>Bangalore Global Dev Hub</span>
-                  </div>
-                  <p className="text-slate-500 pl-5 leading-relaxed">
-                    Clayworks, Bannerghatta Rd, Bengaluru, Karnataka, India (New 2026 Hub)
-                  </p>
-                </div>
-
-                <div className="space-y-1 pt-2 border-t border-slate-200">
-                  <div className="font-bold text-black flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#0055ff]" />
-                    <span>USA Client Support Hub</span>
-                  </div>
-                  <p className="text-slate-500 pl-5 leading-relaxed">
-                    2550 Meridian Blvd, Suite 200, Franklin, TN 37067, USA
-                  </p>
-                </div>
-
-                <div className="space-y-1 pt-2 border-t border-slate-200">
-                  <div className="font-bold text-black flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#0055ff]" />
-                    <span>Middle East GCC Corridor</span>
-                  </div>
-                  <p className="text-slate-500 pl-5 leading-relaxed">
-                    Kuwait, Bahrain, Qatar, UAE (Dubai), Saudi Arabia, Oman
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Suspense fallback={<div className="text-center py-20 font-mono text-sm text-slate-400">Loading booking interface...</div>}>
+          <ContactFormInner />
+        </Suspense>
       </div>
     </div>
   );

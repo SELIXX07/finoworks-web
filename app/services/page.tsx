@@ -5,69 +5,87 @@ import { servicesData } from '@/lib/servicesData';
 export default function ServicesPage() {
   const servicesList = Object.values(servicesData);
 
+  const cardThemes = [
+    { bg: 'bg-[#fbf6ec]', text: 'text-[#18130c]', border: 'border-[#f0e6d2]', tag: 'text-[#d97706] bg-[#fef3c7] border-[#fde68a]' },
+    { bg: 'bg-[#0b0f19]', text: 'text-[#f9fafb]', border: 'border-[#1f293d]', tag: 'text-[#00e5ff] bg-[#00e5ff]/10 border-[#00e5ff]/30' },
+    { bg: 'bg-[#eff6ff]', text: 'text-[#081120]', border: 'border-[#dbeafe]', tag: 'text-[#0055ff] bg-[#0055ff]/10 border-[#0055ff]/20' },
+    { bg: 'bg-[#fef3c7]', text: 'text-[#1e1408]', border: 'border-[#fde68a]', tag: 'text-[#b45309] bg-[#fef3c7] border-[#fde68a]' },
+    { bg: 'bg-[#f0fdf4]', text: 'text-[#052e16]', border: 'border-[#dcfce7]', tag: 'text-[#059669] bg-[#059669]/10 border-[#059669]/20' },
+    { bg: 'bg-white', text: 'text-[#0a0e1a]', border: 'border-slate-200', tag: 'text-[#0055ff] bg-slate-100 border-slate-200' },
+  ];
+
   return (
-    <div className="pt-32 pb-24 bg-white min-h-screen">
-      <div className="max-w-[1600px] mx-auto px-6 md:px-8 space-y-16">
+    <div className="pt-36 pb-36 min-h-screen">
+      <div className="max-w-[1720px] mx-auto px-6 md:px-12 lg:px-16 space-y-20">
+        
         {/* Header */}
-        <div className="space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-slate-900 text-xs font-mono font-bold">
-            <span className="w-2 h-2 rounded-full bg-[#0055ff]" />
+        <div className="space-y-6 max-w-4xl home-reveal">
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-xs font-mono font-bold">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#0055ff] animate-pulse" />
             <span>ALL 11 SPECIALIZED PRACTICES</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight">
-            Financial Messaging & Security Practice.
+
+          <h1 className="text-[clamp(38px,5.4vw,76px)] font-extrabold text-[#0a0e1a] tracking-tight leading-[1.06]">
+            Financial Messaging & Security{' '}
+            <span className="font-serif italic font-normal text-[#0055ff] hover-highlight">Practice.</span>
           </h1>
-          <p className="text-base text-slate-600 leading-relaxed font-normal">
-            From core SWIFT connectivity and ISO 20022 cutover to independent CISA assessments, explore our specialized service catalog built for tier-1 financial institutions.
+
+          <p className="text-[clamp(16px,1.35vw,20px)] text-slate-600 leading-relaxed font-normal">
+            From core SWIFT Alliance connectivity and ISO 20022 cutover to independent CISA assessments, explore our specialized service catalog built for tier-1 financial institutions.
           </p>
         </div>
 
-        {/* 11 Services Grid — each linking to its own dedicated subpage */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesList.map((svc) => (
-            <Link
-              key={svc.slug}
-              href={`/services/${svc.slug}`}
-              className="p-8 rounded-3xl border border-slate-200 bg-slate-50 hover:bg-white hover:border-[#0055ff]/40 hover:shadow-lg transition-all flex flex-col justify-between space-y-6 group"
-            >
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-xs font-mono pb-3 border-b border-slate-200">
-                  <span className="font-bold text-[#0055ff]">{svc.num}</span>
-                  <span className="px-2.5 py-1 rounded-md text-[10px] font-bold bg-white border border-slate-200 text-slate-700 uppercase">
-                    {svc.tag}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold leading-snug text-slate-900 group-hover:text-[#0055ff] transition-colors">
-                  {svc.title}
-                </h3>
-                <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                  {svc.heroDesc}
-                </p>
-              </div>
+        {/* 11 Services Multi-Color Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 home-reveal">
+          {servicesList.map((svc, idx) => {
+            const theme = cardThemes[idx % cardThemes.length];
+            return (
+              <Link
+                key={svc.slug}
+                href={`/services/${svc.slug}`}
+                className={`p-9 md:p-10 rounded-[30px] border ${theme.bg} ${theme.text} ${theme.border} shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between space-y-8 group cursor-pointer`}
+              >
+                <div className="space-y-5">
+                  <div className="flex justify-between items-center pb-4 border-b border-current/10">
+                    <span className="font-mono text-sm font-extrabold opacity-60">{svc.num}</span>
+                    <span className={`font-mono text-[10px] font-bold px-3 py-1 rounded-full border ${theme.tag}`}>
+                      {svc.tag}
+                    </span>
+                  </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-slate-200 text-xs font-bold text-slate-900 group-hover:text-[#0055ff] transition-colors">
-                <span>View Full Specifications & Deliverables</span>
-                <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-              </div>
-            </Link>
-          ))}
+                  <h3 className="text-2xl font-extrabold leading-snug group-hover:text-[#0055ff] transition-colors">
+                    {svc.title}
+                  </h3>
+
+                  <p className="text-xs md:text-sm leading-relaxed opacity-80 font-normal">
+                    {svc.heroDesc}
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between pt-6 border-t border-current/10 text-xs font-bold group-hover:text-[#0055ff] transition-colors">
+                  <span>View Full Specifications & Scope</span>
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
         {/* Bottom CTA */}
-        <div className="p-10 md:p-14 rounded-3xl bg-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
-          <div className="space-y-2">
-            <h3 className="text-2xl md:text-3xl font-extrabold">Need Custom SWIFT Engineering?</h3>
-            <p className="text-sm text-slate-400 font-normal">
+        <div className="p-12 md:p-16 rounded-[36px] bg-[#0a0e1a] text-white flex flex-col md:flex-row items-center justify-between gap-10 shadow-2xl border border-slate-800 home-reveal">
+          <div className="space-y-3 max-w-2xl">
+            <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight">Need Custom SWIFT Engineering?</h3>
+            <p className="text-sm md:text-base text-slate-400 font-normal">
               Speak directly with our principal solutions architect in Nairobi, Bangalore, or Franklin, USA.
             </p>
           </div>
 
           <Link
             href="/contact-us"
-            className="bg-[#0055ff] hover:bg-white hover:text-slate-900 text-white font-bold px-8 py-4 rounded-full transition-all text-xs flex items-center gap-2 whitespace-nowrap shadow-md"
+            className="bg-[#0055ff] hover:bg-white hover:text-[#0a0e1a] text-white font-bold px-9 py-4 rounded-full transition-all duration-300 text-xs md:text-sm flex items-center gap-2.5 whitespace-nowrap shadow-lg group"
           >
             <span>Book Consultation</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </div>
