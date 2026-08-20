@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Globe, Shield, Award, MapPin } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 
 export default function AboutUsPage() {
   const hubs = [
@@ -23,7 +23,7 @@ export default function AboutUsPage() {
             Specialized Financial Infrastructure Specialists.
           </h1>
 
-          <p className="text-base text-slate-600 leading-relaxed">
+          <p className="text-base text-slate-600 leading-relaxed font-normal">
             FinoWorks was founded in Nairobi, Kenya with a clear mandate: provide tier-1 financial institutions with deep, uncompromised SWIFT messaging engineering and independent cybersecurity audit services.
           </p>
         </div>
@@ -41,28 +41,28 @@ export default function AboutUsPage() {
                 <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <h3 className="font-serif italic text-2xl text-black font-normal">{hub.city}</h3>
+                <h3 className="text-xl font-bold text-black">{hub.city}</h3>
                 <p className="text-xs font-bold text-[#0055ff]">{hub.role}</p>
-                <p className="text-xs text-slate-500 leading-relaxed">{hub.address}</p>
+                <p className="text-xs text-slate-500 leading-relaxed font-normal">{hub.address}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Mission Card */}
-        <div className="p-10 md:p-14 rounded-3xl bg-black text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
-          <div className="space-y-2">
-            <h3 className="text-2xl md:text-3xl font-extrabold">Join Our Engineering Network</h3>
-            <p className="text-sm text-slate-400">
-              Explore open CISA auditor, SWIFT integration, and core banking middleware engineering roles.
+        <div className="p-10 md:p-14 rounded-3xl bg-slate-900 text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+          <div className="space-y-2 max-w-xl">
+            <h3 className="text-2xl md:text-3xl font-extrabold">Connect With Our Technical Practice</h3>
+            <p className="text-sm text-slate-400 font-normal">
+              Engage our CISA auditors, SWIFT integration specialists, and core banking middleware engineers.
             </p>
           </div>
 
           <Link
-            href="/careers"
-            className="bg-[#0055ff] hover:bg-white hover:text-black text-white font-bold px-8 py-4 rounded-full transition-all text-xs flex items-center gap-2 whitespace-nowrap shadow-md"
+            href="/contact-us"
+            className="bg-[#0055ff] hover:bg-white hover:text-slate-900 text-white font-bold px-8 py-4 rounded-full transition-all text-xs flex items-center gap-2 whitespace-nowrap shadow-md"
           >
-            <span>View 10 Open Positions</span>
+            <span>Schedule Consultation</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

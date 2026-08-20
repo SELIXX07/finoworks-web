@@ -12,10 +12,10 @@ export default function Footer() {
             SOLUTIONS
           </div>
           <ul className="space-y-2.5 text-xs text-slate-600 font-semibold">
-            <li><Link href="/csp-assessment-v2026" className="hover:text-[#0055ff] transition-colors">SWIFT CSP v2026</Link></li>
-            <li><Link href="/iso-20022-migration" className="hover:text-[#0055ff] transition-colors">ISO 20022 MT ↔ MX</Link></li>
-            <li><Link href="/services" className="hover:text-[#0055ff] transition-colors">Payment Hub Middleware</Link></li>
-            <li><Link href="/services" className="hover:text-[#0055ff] transition-colors">White-Labeled Risk Software</Link></li>
+            <li><Link href="/services/csp-assessment-v2026" className="hover:text-[#0055ff] transition-colors">SWIFT CSP v2026</Link></li>
+            <li><Link href="/services/iso-20022-migration" className="hover:text-[#0055ff] transition-colors">ISO 20022 MT ↔ MX</Link></li>
+            <li><Link href="/services/swift-integration" className="hover:text-[#0055ff] transition-colors">SWIFT Integration (SAA/SAG)</Link></li>
+            <li><Link href="/services/white-labeled-risk-software" className="hover:text-[#0055ff] transition-colors">White-Labeled Risk Software</Link></li>
           </ul>
         </div>
 
@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
           <ul className="space-y-2.5 text-xs text-slate-600 font-semibold">
             <li><Link href="/about-us" className="hover:text-[#0055ff] transition-colors">About FinoWorks</Link></li>
-            <li><Link href="/careers" className="hover:text-[#0055ff] transition-colors">Careers (10 Roles)</Link></li>
+            <li><Link href="/services" className="hover:text-[#0055ff] transition-colors">All 11 Practices</Link></li>
             <li><Link href="/insights" className="hover:text-[#0055ff] transition-colors">Technical Insights</Link></li>
             <li><Link href="/contact-us" className="hover:text-[#0055ff] transition-colors">Contact Engineering</Link></li>
           </ul>
