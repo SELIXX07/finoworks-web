@@ -46,7 +46,7 @@ const projects = [
     client: 'Pan-African Financial Group',
     title: 'Enterprise Payment Hub — SIL to AutoClient Migration',
     desc: 'Automated file transfer pipeline modernizing legacy SWIFT Integration Layer to Alliance Gateway.',
-    tags: ['AUTOLIENT', 'SIL', 'T24 INTEGRATION'],
+    tags: ['AUTOCLIENT', 'SIL', 'T24 INTEGRATION'],
     stat: '4 Banks Onboarded',
   },
 ];
@@ -56,101 +56,97 @@ export default function WorkStrip() {
 
   return (
     <section className="px-6 md:px-8 py-8 max-w-[1600px] mx-auto">
-
-      {/* Counter + Controls — DayNight top-right pattern */}
+      {/* Counter + Controls */}
       <div className="flex items-center justify-between mb-8 home-reveal">
         <div className="section-head">
           <span className="section-num">(02)</span>
           <span>RESULTS</span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[13px] text-white/35">
-            <strong className="text-white/80 text-base">{String(active + 1).padStart(2, '0')}</strong> / {String(projects.length).padStart(2, '0')}
+          <span className="font-mono text-[13px] text-slate-500 font-semibold">
+            <strong className="text-black text-base font-bold">{String(active + 1).padStart(2, '0')}</strong> / {String(projects.length).padStart(2, '0')}
           </span>
           <div className="flex gap-2">
             <button
               onClick={() => setActive((p) => (p - 1 + projects.length) % projects.length)}
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-black hover:border-black transition-all"
+              aria-label="Previous project"
             >
-              <ArrowLeft className="w-3.5 h-3.5" />
+              <ArrowLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => setActive((p) => (p + 1) % projects.length)}
-              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-black hover:border-black transition-all"
+              aria-label="Next project"
             >
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Italic teaser — DayNight sub-label */}
-      <p className="font-serif italic text-[15px] text-white/35 mb-10 home-reveal">
-        Live client deployments first — SWIFT, ISO 20022, CSP — then studio pilot programmes.
-      </p>
-
-      {/* Cards grid — DayNight browser-screenshot style */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[1px] bg-white/[0.07] rounded-2xl overflow-hidden home-reveal">
+      {/* Cards grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 home-reveal">
         {projects.map((p, i) => (
           <div
             key={i}
-            className={`p-7 flex flex-col justify-between min-h-[360px] transition-all duration-300 cursor-pointer ${
+            className={`p-8 rounded-3xl border flex flex-col justify-between min-h-[380px] transition-all duration-300 cursor-pointer ${
               i === active
-                ? 'bg-[#0066ff] text-white'
-                : 'bg-[#0a1929] text-white/75 hover:bg-[#0c1f35]'
+                ? 'bg-black text-white border-black shadow-xl -translate-y-1'
+                : 'bg-slate-50 text-slate-900 border-slate-200 hover:border-[#0055ff]/40 hover:bg-white hover:shadow-md'
             }`}
             onClick={() => setActive(i)}
           >
             <div className="space-y-4">
               {/* Top meta */}
               <div className="flex justify-between items-start">
-                <span className={`font-mono text-[10px] font-bold ${i === active ? 'text-white/60' : 'text-white/30'}`}>
+                <span className={`font-mono text-[11px] font-bold ${i === active ? 'text-white/60' : 'text-slate-400'}`}>
                   {p.idx}
                 </span>
-                <span className={`font-mono text-[9px] font-bold px-2 py-1 rounded ${
-                  i === active ? 'bg-white/15 text-white' : 'bg-white/5 text-white/40'
+                <span className={`font-mono text-[9px] font-bold px-2.5 py-1 rounded-md ${
+                  i === active ? 'bg-white/20 text-white' : 'bg-white border border-slate-200 text-slate-700'
                 }`}>
                   {p.category} · {p.year}
                 </span>
               </div>
 
-              {/* Client domain bar (simulates browser screenshot) */}
-              <div className={`rounded-lg px-3 py-2 font-mono text-[10px] ${
-                i === active ? 'bg-white/10 text-white/70' : 'bg-white/5 text-white/30'
+              {/* Client domain bar */}
+              <div className={`rounded-lg px-3 py-2 font-mono text-[11px] ${
+                i === active ? 'bg-white/10 text-white/80' : 'bg-white border border-slate-200 text-slate-600'
               }`}>
                 ● {p.client.toLowerCase().replace(/ /g, '')}.com
               </div>
 
               <div className={`text-[10px] font-mono font-bold uppercase tracking-widest ${
-                i === active ? 'text-[#00d2ff]' : 'text-white/30'
+                i === active ? 'text-[#00d2ff]' : 'text-[#0055ff]'
               }`}>
                 {p.type}
               </div>
 
-              <h3 className="font-serif italic text-[clamp(16px,1.6vw,20px)] leading-snug font-normal">
+              <h3 className="font-serif italic text-[clamp(18px,1.6vw,22px)] leading-snug font-normal">
                 {p.title}
               </h3>
 
-              <p className={`text-[12px] leading-relaxed ${i === active ? 'text-white/70' : 'text-white/40'}`}>
+              <p className={`text-[13px] leading-relaxed ${i === active ? 'text-white/70' : 'text-slate-600'}`}>
                 {p.desc}
               </p>
             </div>
 
             {/* Bottom */}
-            <div className="space-y-3 pt-4">
+            <div className="space-y-3 pt-6 border-t border-current/10">
               <div className="flex flex-wrap gap-1.5">
                 {p.tags.map((tag, ti) => (
                   <span
                     key={ti}
                     className={`text-[9px] font-mono font-bold px-2 py-1 rounded ${
-                      i === active ? 'bg-white/15 text-white' : 'bg-white/5 text-white/40'
+                      i === active ? 'bg-white/15 text-white' : 'bg-slate-200/80 text-slate-700'
                     }`}
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <div className={`font-mono text-[10px] font-bold ${i === active ? 'text-[#00d2ff]' : 'text-white/25'}`}>
+              <div className={`font-mono text-[11px] font-bold ${i === active ? 'text-[#00d2ff]' : 'text-[#0055ff]'}`}>
                 ✓ {p.stat}
               </div>
             </div>
@@ -158,10 +154,10 @@ export default function WorkStrip() {
         ))}
       </div>
 
-      <div className="mt-6 home-reveal">
+      <div className="mt-8 home-reveal">
         <Link
           href="/contact-us"
-          className="text-[13px] text-white/35 hover:text-white/70 transition-colors font-medium flex items-center gap-1.5"
+          className="text-[13px] text-slate-600 hover:text-[#0055ff] transition-colors font-semibold flex items-center gap-1.5"
         >
           See all case studies <ArrowRight className="w-3.5 h-3.5" />
         </Link>

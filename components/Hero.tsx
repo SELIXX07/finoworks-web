@@ -9,7 +9,7 @@ export default function Hero() {
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const [website, setWebsite] = useState('');
 
-  /* ─── Interactive Particle Orb (FinoWorks blue-cyan gradient) ─── */
+  /* ─── Interactive Particle Orb for Light Theme ─── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -23,10 +23,10 @@ export default function Hero() {
     canvas.height = SIZE;
     const CX = SIZE / 2;
     const CY = SIZE / 2;
-    const R = SIZE * 0.44;
+    const R = SIZE * 0.42;
 
     /* Golden-ratio sphere point distribution */
-    const N = 520;
+    const N = 560;
     const pts = Array.from({ length: N }, (_, i) => {
       const theta = Math.acos(1 - (2 * (i + 0.5)) / N);
       const phi = Math.PI * (1 + Math.sqrt(5)) * i;
@@ -34,28 +34,28 @@ export default function Hero() {
         ox: Math.sin(theta) * Math.cos(phi),
         oy: Math.sin(theta) * Math.sin(phi),
         oz: Math.cos(theta),
-        size: Math.random() * 2.5 + 0.8,
+        size: Math.random() * 2.4 + 0.8,
       };
     });
 
     const render = () => {
       ctx.clearRect(0, 0, SIZE, SIZE);
 
-      /* Ambient glow */
-      const grd = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.1);
-      grd.addColorStop(0, 'rgba(0,102,255,0.18)');
-      grd.addColorStop(0.5, 'rgba(0,210,255,0.06)');
-      grd.addColorStop(1, 'rgba(0,0,0,0)');
+      /* Ambient soft radial glow behind orb */
+      const grd = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.15);
+      grd.addColorStop(0, 'rgba(0, 85, 255, 0.12)');
+      grd.addColorStop(0.5, 'rgba(0, 180, 216, 0.05)');
+      grd.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = grd;
       ctx.beginPath();
-      ctx.arc(CX, CY, R * 1.1, 0, Math.PI * 2);
+      ctx.arc(CX, CY, R * 1.15, 0, Math.PI * 2);
       ctx.fill();
 
-      /* Orbit rings */
+      /* Orbital dashed rings */
       const rings = [
-        { r: R * 1.05, rot: t * 0.006, tilt: 0.3, dash: [6, 8], opacity: 0.18 },
-        { r: R * 1.2,  rot: -t * 0.004, tilt: 0.7, dash: [3, 12], opacity: 0.1 },
-        { r: R * 1.38, rot: t * 0.003,  tilt: 0.15, dash: [10, 14], opacity: 0.06 },
+        { r: R * 1.06, rot: t * 0.005, tilt: 0.35, dash: [6, 8], opacity: 0.22 },
+        { r: R * 1.22, rot: -t * 0.004, tilt: 0.7, dash: [3, 12], opacity: 0.14 },
+        { r: R * 1.4,  rot: t * 0.003, tilt: 0.2, dash: [8, 14], opacity: 0.08 },
       ];
 
       rings.forEach(({ r, rot, tilt, dash, opacity }) => {
@@ -63,7 +63,7 @@ export default function Hero() {
         ctx.translate(CX, CY);
         ctx.rotate(rot);
         ctx.scale(1, Math.abs(Math.sin(tilt)));
-        ctx.strokeStyle = `rgba(0,210,255,${opacity})`;
+        ctx.strokeStyle = `rgba(0, 85, 255, ${opacity})`;
         ctx.lineWidth = 1;
         ctx.setLineDash(dash);
         ctx.beginPath();
@@ -72,21 +72,19 @@ export default function Hero() {
         ctx.restore();
       });
 
-      /* Mouse influence */
-      const mx = (mouseRef.current.x - 0.5) * 0.3;
-      const my = (mouseRef.current.y - 0.5) * 0.3;
+      /* Mouse interaction */
+      const mx = (mouseRef.current.x - 0.5) * 0.35;
+      const my = (mouseRef.current.y - 0.5) * 0.35;
 
-      /* Render points */
+      /* Render 3D node points */
       const sorted = pts
         .map((p) => {
-          /* Y-axis rotation */
           const cosY = Math.cos(t * 0.004 + mx);
           const sinY = Math.sin(t * 0.004 + mx);
           let x = p.ox * cosY - p.oz * sinY;
           let z = p.ox * sinY + p.oz * cosY;
           let y = p.oy;
 
-          /* X-axis rotation */
           const cosX = Math.cos(my * 0.5);
           const sinX = Math.sin(my * 0.5);
           const y2 = y * cosX - z * sinX;
@@ -98,24 +96,25 @@ export default function Hero() {
 
       sorted.forEach(({ sx, sy, z, size }) => {
         const norm = (z + 1) / 2;
-        /* Color: deep navy (back) → blue → cyan (front) */
-        const r = Math.round(0 + norm * 0);
-        const g = Math.round(50 + norm * 160);
-        const bl = Math.round(200 + norm * 55);
-        const alpha = 0.18 + norm * 0.82;
-        const s = size * (0.4 + norm * 0.8);
-        ctx.fillStyle = `rgba(${r},${g},${bl},${alpha})`;
+        /* Deep obsidian (back) → electric cobalt blue (front) */
+        const red = Math.round(15 * (1 - norm));
+        const green = Math.round(25 * (1 - norm) + 85 * norm);
+        const blue = Math.round(50 * (1 - norm) + 255 * norm);
+        const alpha = 0.2 + norm * 0.8;
+        const s = size * (0.5 + norm * 0.75);
+
+        ctx.fillStyle = `rgba(${red}, ${green}, ${blue}, ${alpha})`;
         ctx.beginPath();
         ctx.arc(sx, sy, s, 0, Math.PI * 2);
         ctx.fill();
       });
 
       /* TAP ME label */
-      ctx.font = `bold 11px 'Geist Mono', monospace`;
-      ctx.fillStyle = 'rgba(0,210,255,0.5)';
+      ctx.font = `600 11px 'Geist Mono', monospace`;
+      ctx.fillStyle = '#0055ff';
       ctx.textAlign = 'center';
       ctx.letterSpacing = '0.15em';
-      ctx.fillText('TAP ME', CX, CY + 6);
+      ctx.fillText('TAP ME', CX, CY + 5);
 
       t++;
       animId = requestAnimationFrame(render);
@@ -139,61 +138,58 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-start pt-28 pb-12 px-6 md:px-8 overflow-hidden">
-
+    <section className="relative min-h-screen flex items-start pt-28 pb-14 px-6 md:px-8 overflow-hidden bg-white">
       {/* Hero 2-column grid */}
-      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-8 items-start">
-
+      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-10 items-start">
         {/* ── LEFT COLUMN ── */}
         <div className="space-y-8 pt-4">
-
-          {/* Eyebrow pill — DayNight style */}
-          <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-white/50 border border-white/10 rounded-full px-4 py-2 bg-white/[0.03]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00d2ff] animate-pulse" />
+          {/* Eyebrow pill */}
+          <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 border border-slate-200 rounded-full px-4 py-2 bg-slate-50/80 shadow-sm">
+            <span className="w-2 h-2 rounded-full bg-[#0055ff] animate-pulse" />
             <span>SWIFT · ISO 20022 · COMPLIANCE</span>
-            <span className="text-white/25">/</span>
-            <span className="text-[#0066ff] font-bold">CSP v2026</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-[#0055ff] font-extrabold">CSP v2026</span>
           </div>
 
-          {/* H1 — DayNight size and mixed serif */}
-          <h1 className="font-sans text-[clamp(36px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-white/95">
+          {/* H1 — Bold Pitch-Black Heading + Italic Accent */}
+          <h1 className="font-sans text-[clamp(36px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-black">
             SWIFT Infrastructure<br />
             & Independent<br />
             CSP Assessments{' '}
-            <em className="font-serif font-normal italic text-[#00d2ff] not-italic">
+            <em className="font-serif font-normal italic text-[#0055ff]">
               That Certify.
             </em>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-[clamp(15px,1.4vw,18px)] text-white/50 leading-relaxed max-w-[500px]">
+          <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-[520px]">
             SWIFT Certified Provider. CISA-certified auditors auditing your CSCF v2026 controls, then engineering the remediation — so you pass the KYC Registry attestation on the first submission.
           </p>
 
-          {/* URL Input Bar — DayNight audit input */}
-          <div className="flex items-center gap-3 max-w-[520px]">
-            <div className="flex-1 flex items-center gap-3 bg-white/[0.05] border border-white/10 rounded-full px-5 py-3.5 backdrop-blur-sm">
+          {/* URL / BIC Input Bar */}
+          <div className="flex items-center gap-3 max-w-[540px]">
+            <div className="flex-1 flex items-center gap-3 bg-slate-50 border border-slate-300 focus-within:border-[#0055ff] rounded-full px-5 py-3.5 transition-colors shadow-sm">
               <input
                 type="text"
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
                 placeholder="Enter your BIC or institution name…"
-                className="flex-1 bg-transparent text-sm text-white/80 placeholder:text-white/25 outline-none font-mono"
+                className="flex-1 bg-transparent text-sm text-black placeholder:text-slate-400 outline-none font-mono"
               />
             </div>
             <Link
               href="/csp-assessment-v2026"
-              className="inline-flex items-center gap-2 bg-[#0066ff] hover:bg-[#0055dd] text-white font-bold text-[13px] px-6 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap"
+              className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-black text-white font-bold text-[13px] px-7 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg"
             >
               Free Audit <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
-          <p className="font-mono text-[10px] text-white/25 uppercase tracking-widest -mt-4">
-            Free SWIFT CSP Gap Analysis
+          <p className="font-mono text-[10px] text-slate-400 uppercase tracking-widest -mt-4 font-semibold">
+            Free SWIFT CSP Gap Analysis & Audit Scope
           </p>
 
-          {/* Metrics bar — DayNight style */}
-          <div className="flex flex-wrap items-center gap-0 pt-4">
+          {/* Metrics bar */}
+          <div className="flex flex-wrap items-center gap-0 pt-4 border-t border-slate-200">
             {[
               { label: 'SINCE', val: '2009' },
               { label: 'FOCUS', val: 'SWIFT Compliance' },
@@ -201,23 +197,23 @@ export default function Hero() {
             ].map((m, i) => (
               <div key={i} className="flex items-center">
                 <div className="pr-6 md:pr-10">
-                  <div className="text-[10px] font-mono uppercase tracking-widest text-white/30">{m.label}</div>
-                  <div className="text-[15px] font-bold text-white/80 mt-0.5">{m.val}</div>
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">{m.label}</div>
+                  <div className="text-[15px] font-extrabold text-black mt-0.5">{m.val}</div>
                 </div>
-                {i < 2 && <div className="w-px h-8 bg-white/10 mr-6 md:mr-10 hidden sm:block" />}
+                {i < 2 && <div className="w-px h-8 bg-slate-200 mr-6 md:mr-10 hidden sm:block" />}
               </div>
             ))}
             <Link
               href="/about-us"
-              className="ml-auto text-[13px] text-white/35 hover:text-white/70 transition-colors font-medium flex items-center gap-1"
+              className="ml-auto text-[13px] text-slate-500 hover:text-[#0055ff] transition-colors font-semibold flex items-center gap-1"
             >
-              Our story <ArrowRight className="w-3 h-3" />
+              Our story <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN — Particle Orb ── */}
-        <div className="relative flex items-center justify-center lg:justify-end pt-0 lg:-mt-8">
+        {/* ── RIGHT COLUMN — 3D Node Orb ── */}
+        <div className="relative flex items-center justify-center lg:justify-end pt-0 lg:-mt-6">
           <canvas
             ref={canvasRef}
             className="select-none"

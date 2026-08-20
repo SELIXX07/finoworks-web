@@ -36,7 +36,7 @@ export default function FaqAccordion() {
           <details key={idx} className="faq-item group">
             <summary className="faq-summary">
               <span>{faq.q}</span>
-              <span className="faq-icon font-mono group-open:rotate-45">
+              <span className="faq-icon font-mono">
                 +
               </span>
             </summary>

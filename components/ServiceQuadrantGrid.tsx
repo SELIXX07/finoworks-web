@@ -20,8 +20,8 @@ const services: ServiceQuadrant[] = [
     title: 'SWIFT CSP v2026 Independent Assessments',
     desc: 'Authorized CISA-certified attestation across all 32 mandatory CSCF controls with KYC Registry submission and direct remediation engineering.',
     bullets: ['32 Mandatory CSCF Controls', 'Mock Audit & Penetration Testing', 'KYC Registry Evidence Pack', '100% Attestation Approval'],
-    pricing: 'Fixed Engagement',
-    themeClass: 'qc-ice',
+    pricing: 'Fixed Scope Audit',
+    themeClass: 'qc-cream',
   },
   {
     num: '02',
@@ -39,7 +39,7 @@ const services: ServiceQuadrant[] = [
     desc: 'Unified transaction router connecting Oracle Flexcube, Temenos T24, and SAP directly to SWIFT Alliance Access and Fedwire rails.',
     bullets: ['SIL to AutoClient Modernization', 'Active-Active DR Failover', 'Real-Time RMA Surveillance', 'Multi-Rail Core Adapter'],
     pricing: 'Enterprise Middleware',
-    themeClass: 'qc-blue',
+    themeClass: 'qc-ice',
   },
   {
     num: '04',
@@ -48,7 +48,7 @@ const services: ServiceQuadrant[] = [
     desc: 'Custom-engineered threat monitoring, SIEM log forwarding, and automated risk scoring built specifically for commercial banking compliance.',
     bullets: ['Real-Time SAA Log Auditing', 'Automated Vulnerability Scanner', 'Central Bank Export Reports', 'Custom Bank White-Labeling'],
     pricing: 'Annual License',
-    themeClass: 'qc-cyan',
+    themeClass: 'qc-amber',
   },
 ];
 
@@ -62,17 +62,17 @@ export default function ServiceQuadrantGrid() {
             <span className="section-num">(03)</span>
             <span>SOLUTIONS & SYSTEMS</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white/95 tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight">
             Infrastructure & Audit Systems Built for Scale.
           </h2>
         </div>
-        <p className="font-serif italic text-sm text-white/40 max-w-md">
+        <p className="font-serif italic text-base text-slate-500 max-w-md">
           Offers engineered for financial institutions: SWIFT CSP audit, ISO 20022 message conversion, payment middleware, and threat risk tools.
         </p>
       </div>
 
-      {/* 2x2 Quadrant Grid with 1px seam */}
-      <div className="quad-grid home-reveal shadow-2xl">
+      {/* 2x2 Quadrant Grid with DayNight 4-color signature palette */}
+      <div className="quad-grid home-reveal shadow-lg">
         {services.map((svc, idx) => (
           <div
             key={idx}
@@ -92,7 +92,7 @@ export default function ServiceQuadrantGrid() {
               </p>
 
               {/* Bullet list */}
-              <ul className="space-y-2 text-xs qc-soft">
+              <ul className="space-y-2 text-xs qc-soft font-medium">
                 {svc.bullets.map((b, bi) => (
                   <li key={bi} className="flex items-center gap-2">
                     <span className="opacity-60">•</span>
@@ -107,7 +107,7 @@ export default function ServiceQuadrantGrid() {
               <span className="text-xs font-mono font-bold tracking-wider">{svc.pricing}</span>
               <Link
                 href="/services"
-                className="w-8 h-8 rounded-full border border-current/20 flex items-center justify-center hover:bg-current/10 transition-colors"
+                className="w-9 h-9 rounded-full border border-current/20 flex items-center justify-center hover:bg-current/10 transition-colors"
                 aria-label={`View ${svc.title}`}
               >
                 <ArrowUpRight className="w-4 h-4" />

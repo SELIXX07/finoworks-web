@@ -40,22 +40,17 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-white/[0.08] backdrop-blur-xl bg-[#05101f]/80'
+          ? 'border-b border-slate-200/80 backdrop-blur-xl bg-white/90 shadow-sm'
           : 'bg-transparent'
       }`}
     >
-      {/* Scroll Progress Bar */}
-      <div className="h-[2px] w-full bg-transparent absolute top-0 left-0 right-0 z-10">
-        <div id="scroll-bar" className="h-full bg-gradient-to-r from-[#0066ff] via-[#00d2ff] to-[#0066ff] w-0 transition-all duration-75" />
-      </div>
-
       <nav className="max-w-[1600px] mx-auto px-6 md:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="font-mono text-[13px] font-bold text-white/90 tracking-tight hover:text-white transition-colors"
+          className="font-mono text-[14px] font-extrabold text-black tracking-tight hover:text-[#0055ff] transition-colors"
         >
-          finoworks
+          finoworks<span className="text-[#0055ff]">.</span>
         </Link>
 
         {/* Center Nav */}
@@ -64,7 +59,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] text-white/55 hover:text-white/90 transition-colors font-medium"
+              className="text-[13px] text-slate-600 hover:text-black transition-colors font-medium"
             >
               {l.label}
             </Link>
@@ -73,10 +68,10 @@ export default function Navbar() {
 
         {/* Right: Clock + CTA */}
         <div className="hidden md:flex items-center gap-5">
-          <span className="font-mono text-[11px] text-white/35 tracking-wider">{clock}</span>
+          <span className="font-mono text-[11px] text-slate-400 tracking-wider font-semibold">{clock}</span>
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 bg-white text-[#05101f] font-bold text-[13px] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all"
+            className="inline-flex items-center gap-2 bg-black text-white font-bold text-[13px] px-5 py-2.5 rounded-full hover:bg-[#0055ff] transition-all shadow-sm"
           >
             Book Assessment <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -84,7 +79,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-white/70 hover:text-white"
+          className="md:hidden text-black"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -94,12 +89,12 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[#05101f]/95 backdrop-blur-xl border-t border-white/[0.08] px-6 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-white/98 backdrop-blur-xl border-t border-slate-200 px-6 py-6 flex flex-col gap-5 shadow-xl">
           {navLinks.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="text-[15px] text-white/70 hover:text-white transition-colors font-medium"
+              className="text-[15px] text-slate-700 hover:text-black transition-colors font-semibold"
               onClick={() => setMobileOpen(false)}
             >
               {l.label}
@@ -107,7 +102,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 bg-white text-[#05101f] font-bold text-[14px] px-5 py-3 rounded-full w-fit mt-2"
+            className="inline-flex items-center gap-2 bg-black text-white font-bold text-[14px] px-5 py-3 rounded-full w-fit mt-2"
             onClick={() => setMobileOpen(false)}
           >
             Book Assessment <ArrowRight className="w-3.5 h-3.5" />
