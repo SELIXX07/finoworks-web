@@ -32,30 +32,41 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 sm:px-6 pointer-events-none">
-      {/* Centered Floating Glassmorphic Pill Container */}
-      <nav className="pointer-events-auto flex items-center justify-between gap-4 md:gap-8 px-6 py-2.5 rounded-full bg-white/90 border border-slate-200/90 shadow-[0_12px_36px_rgba(0,0,0,0.07)] backdrop-blur-xl max-w-[1100px] w-full transition-all duration-300">
-        
-        {/* Left: Brand Logo */}
-        <Link
-          href="/"
-          className="font-mono text-[14px] font-extrabold text-slate-900 tracking-tight hover:text-[#0055ff] transition-colors shrink-0"
-        >
-          finoworks<span className="text-[#0055ff]">.</span>
-        </Link>
+    <header className="fixed top-5 left-0 right-0 z-50 flex items-center justify-center px-4 sm:px-6 pointer-events-none">
+      {/* ── Apple Liquid Glass Pill Container ── */}
+      <nav
+        className="pointer-events-auto relative w-full max-w-[1060px] h-[54px] rounded-full px-4 sm:px-6 grid grid-cols-2 md:grid-cols-[1fr_auto_1fr] items-center transition-all duration-300"
+        style={{
+          background: 'rgba(255, 255, 255, 0.68)',
+          backdropFilter: 'blur(28px) saturate(190%)',
+          WebkitBackdropFilter: 'blur(28px) saturate(190%)',
+          border: '1px solid rgba(255, 255, 255, 0.85)',
+          boxShadow:
+            '0 20px 45px -12px rgba(10, 20, 50, 0.08), 0 1px 3px 0 rgba(0, 0, 0, 0.04), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.03)',
+        }}
+      >
+        {/* ── LEFT: Logo ── */}
+        <div className="flex items-center">
+          <Link
+            href="/"
+            className="font-mono text-[14px] font-extrabold text-slate-900 tracking-tight hover:text-[#0055ff] transition-colors"
+          >
+            finoworks<span className="text-[#0055ff]">.</span>
+          </Link>
+        </div>
 
-        {/* Center: Navigation Links */}
-        <div className="hidden md:flex items-center gap-1 sm:gap-2">
+        {/* ── CENTER: True Mathematically Centered Navigation Links ── */}
+        <div className="hidden md:flex items-center justify-center gap-1.5 px-2 py-1 rounded-full bg-slate-900/[0.04] border border-black/[0.03]">
           {navLinks.map((l) => {
             const isActive = pathname === l.href;
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`text-[13px] font-bold px-3.5 py-1.5 rounded-full transition-all duration-200 ${
+                className={`relative text-[13px] font-bold px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
                     ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/70'
                 }`}
               >
                 {l.label}
@@ -64,41 +75,53 @@ export default function Navbar() {
           })}
         </div>
 
-        {/* Right: Live UTC Clock + CTA Button */}
-        <div className="hidden md:flex items-center gap-4 shrink-0">
-          <span className="font-mono text-[11px] text-slate-400 tracking-wider font-bold">
+        {/* ── RIGHT: Live Clock + Book CTA ── */}
+        <div className="hidden md:flex items-center justify-end gap-4">
+          <span className="font-mono text-[11px] text-slate-500 font-bold tracking-wider opacity-80">
             {clock}
           </span>
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-1.5 bg-[#0055ff] hover:bg-slate-900 text-white font-bold text-[12px] px-4 py-2 rounded-full transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 bg-[#0055ff] hover:bg-slate-900 text-white font-bold text-[12px] px-4 py-2 rounded-full transition-all duration-200 shadow-[0_4px_14px_rgba(0,85,255,0.35)] hover:shadow-md"
           >
             <span>Book Assessment</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          className="md:hidden text-slate-900 p-1"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 text-slate-900" />}
-        </button>
+        {/* ── MOBILE: Hamburger Toggle ── */}
+        <div className="flex justify-end md:hidden">
+          <button
+            className="text-slate-900 p-1 rounded-lg hover:bg-black/5"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile Drawer */}
+      {/* ── MOBILE: Apple Glass Drawer ── */}
       {mobileOpen && (
-        <div className="pointer-events-auto fixed top-20 left-4 right-4 bg-white/98 backdrop-blur-2xl border border-slate-200 rounded-3xl p-6 shadow-2xl flex flex-col gap-4 z-50 md:hidden animate-in fade-in zoom-in-95 duration-200">
+        <div
+          className="pointer-events-auto fixed top-20 left-4 right-4 rounded-3xl p-6 shadow-2xl flex flex-col gap-3 z-50 md:hidden animate-in fade-in zoom-in-95 duration-200"
+          style={{
+            background: 'rgba(255, 255, 255, 0.88)',
+            backdropFilter: 'blur(30px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+            border: '1px solid rgba(255, 255, 255, 0.9)',
+            boxShadow:
+              '0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.95)',
+          }}
+        >
           {navLinks.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className={`text-[15px] font-bold px-4 py-2.5 rounded-2xl transition-colors ${
+              className={`text-[15px] font-bold px-4 py-3 rounded-2xl transition-colors ${
                 pathname === l.href
-                  ? 'bg-slate-900 text-white'
-                  : 'text-slate-700 hover:bg-slate-100'
+                  ? 'bg-slate-900 text-white shadow-sm'
+                  : 'text-slate-700 hover:bg-white/80'
               }`}
               onClick={() => setMobileOpen(false)}
             >
@@ -107,7 +130,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact-us"
-            className="inline-flex items-center justify-center gap-2 bg-[#0055ff] text-white font-bold text-[14px] px-5 py-3 rounded-2xl mt-2 shadow-md"
+            className="inline-flex items-center justify-center gap-2 bg-[#0055ff] text-white font-bold text-[14px] px-5 py-3.5 rounded-2xl mt-2 shadow-[0_4px_16px_rgba(0,85,255,0.35)]"
             onClick={() => setMobileOpen(false)}
           >
             <span>Book Assessment</span>
