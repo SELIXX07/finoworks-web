@@ -2,14 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, CheckCircle2, ShieldCheck, RefreshCw, Layers, Lock, Cpu } from 'lucide-react';
+import { ArrowRight, CheckCircle2, RefreshCw, Layers, Lock, Cpu } from 'lucide-react';
 
 export default function ProductsMosaic() {
-  // State for MT-to-MX Converter Interactive Demo
   const [mtConverted, setMtConverted] = useState(false);
   const [isTranslating, setIsTranslating] = useState(false);
 
-  // State for CSP Readiness Checklist Widget
   const [checklist, setChecklist] = useState({
     secureZone: true,
     mfaEnforced: true,
@@ -29,24 +27,21 @@ export default function ProductsMosaic() {
     setTimeout(() => {
       setMtConverted(true);
       setIsTranslating(false);
-    }, 800);
+    }, 700);
   };
 
   return (
-    <section className="py-28 bg-slate-50 border-b border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+    <section className="py-24 relative z-10 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto floating-surface p-8 md:p-14 space-y-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 home-reveal">
           <div className="space-y-4 max-w-2xl">
             <div className="flex items-center gap-3 text-xs font-mono text-electric-500 font-bold uppercase tracking-widest">
-              <span>(02) Flagship Software & Services</span>
+              <span>(03) Flagship Software & Services</span>
               <span className="w-8 h-px bg-electric-500" />
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
               Engineered for Modern Banking Infrastructure.
             </h2>
-            <p className="text-base text-slate-600">
-              Interactive demos of our core products and compliance frameworks.
-            </p>
           </div>
 
           <Link
@@ -61,7 +56,7 @@ export default function ProductsMosaic() {
         {/* Mosaic Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Card 1: Live MT ↔ MX ISO 20022 Interactive Converter Demo (Span 7) */}
-          <div className="lg:col-span-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all duration-300 space-y-6 flex flex-col justify-between">
+          <div className="lg:col-span-7 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all duration-300 space-y-6 flex flex-col justify-between home-reveal">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="space-y-1">
@@ -103,7 +98,7 @@ export default function ProductsMosaic() {
                     <div className="text-slate-500 pt-2">// Unstructured MT format — vulnerability to truncation</div>
                   </div>
                 ) : (
-                  <div className="text-emerald-400 space-y-1 leading-relaxed animate-fade-in">
+                  <div className="text-emerald-400 space-y-1 leading-relaxed">
                     <div>&lt;Document xmlns=&quot;urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08&quot;&gt;</div>
                     <div className="pl-4">&lt;FIToFICstmrCdtTrf&gt;</div>
                     <div className="pl-8">&lt;GrpHdr&gt;&lt;MsgId&gt;FINOWORKS-2026-MX&lt;/MsgId&gt;&lt;/GrpHdr&gt;</div>
@@ -125,7 +120,7 @@ export default function ProductsMosaic() {
           </div>
 
           {/* Card 2: SWIFT CSP v2026 Audit Readiness Checklist (Span 5) */}
-          <div className="lg:col-span-5 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all duration-300 flex flex-col justify-between space-y-6">
+          <div className="lg:col-span-5 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all duration-300 flex flex-col justify-between space-y-6 home-reveal">
             <div className="space-y-4">
               <div className="text-xs font-mono text-electric-500 font-bold uppercase tracking-wider">
                 FLAGSHIP PRODUCT 02
@@ -148,7 +143,6 @@ export default function ProductsMosaic() {
                   </span>
                 </div>
 
-                {/* Progress bar */}
                 <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-electric-500 transition-all duration-500"
@@ -156,7 +150,6 @@ export default function ProductsMosaic() {
                   />
                 </div>
 
-                {/* Toggles */}
                 <div className="space-y-2 text-xs">
                   <button
                     onClick={() => toggleCheck('secureZone')}
@@ -192,7 +185,7 @@ export default function ProductsMosaic() {
 
             <Link
               href="/csp-assessment-v2026"
-              className="inline-flex items-center justify-center bg-navy-900 hover:bg-electric-500 text-white font-bold py-3 px-6 rounded-xl transition-all duration-300 text-xs gap-2"
+              className="inline-flex items-center justify-center bg-navy-900 hover:bg-electric-500 text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-300 text-xs gap-2"
             >
               <span>Book Official CISA Independent Audit</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -200,7 +193,7 @@ export default function ProductsMosaic() {
           </div>
 
           {/* Card 3: White-Labeled Risk & Cybersecurity Software (Span 6) */}
-          <div className="lg:col-span-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all space-y-4">
+          <div className="lg:col-span-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all space-y-4 home-reveal">
             <div className="w-12 h-12 rounded-xl bg-electric-50 flex items-center justify-center text-electric-500">
               <Cpu className="w-6 h-6" />
             </div>
@@ -216,7 +209,7 @@ export default function ProductsMosaic() {
           </div>
 
           {/* Card 4: Enterprise Payment Hub & Middleware (Span 6) */}
-          <div className="lg:col-span-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all space-y-4">
+          <div className="lg:col-span-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:border-electric-500/40 transition-all space-y-4 home-reveal">
             <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-navy-900">
               <Layers className="w-6 h-6" />
             </div>

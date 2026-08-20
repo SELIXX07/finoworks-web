@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function WorkStrip() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -51,11 +51,11 @@ export default function WorkStrip() {
   };
 
   return (
-    <section className="py-28 bg-white border-b border-slate-200/80 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
+    <section className="py-24 relative z-10 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto floating-surface p-8 md:p-14 space-y-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-4 max-w-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 home-reveal">
+          <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-3 text-xs font-mono text-electric-500 font-bold uppercase tracking-widest">
               <span>(02) Selected Case Studies & Deployments</span>
               <span className="w-8 h-px bg-electric-500" />
@@ -73,14 +73,14 @@ export default function WorkStrip() {
             <div className="flex gap-2">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
+                className="w-10 h-10 rounded-xl bg-slate-100/90 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
                 aria-label="Previous project"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNext}
-                className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
+                className="w-10 h-10 rounded-xl bg-slate-100/90 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
                 aria-label="Next project"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -94,10 +94,10 @@ export default function WorkStrip() {
           {projects.map((proj, idx) => (
             <div
               key={idx}
-              className={`p-8 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-6 ${
+              className={`p-7 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-6 home-reveal ${
                 idx === activeIndex
-                  ? 'bg-slate-900 text-white border-slate-800 shadow-xl scale-[1.02]'
-                  : 'bg-slate-50 text-navy-900 border-slate-200 hover:border-electric-500/50'
+                  ? 'bg-slate-900 text-white border-slate-800 shadow-2xl scale-[1.02]'
+                  : 'bg-slate-50/80 text-navy-900 border-slate-200 hover:border-electric-500/50'
               }`}
             >
               <div className="space-y-4">
@@ -105,14 +105,14 @@ export default function WorkStrip() {
                   <span className={idx === activeIndex ? 'text-electric-400 font-bold' : 'text-slate-400 font-bold'}>
                     {proj.idx}
                   </span>
-                  <span className={`px-2.5 py-1 rounded text-[11px] font-bold ${
+                  <span className={`px-2.5 py-1 rounded text-[10px] font-bold ${
                     idx === activeIndex ? 'bg-slate-800 text-electric-300' : 'bg-white border border-slate-200 text-slate-600'
                   }`}>
                     {proj.category} • {proj.year}
                   </span>
                 </div>
 
-                <h3 className="text-xl font-bold leading-snug">{proj.title}</h3>
+                <h3 className="text-lg font-bold leading-snug">{proj.title}</h3>
                 <p className={`text-xs leading-relaxed ${idx === activeIndex ? 'text-slate-300' : 'text-slate-600'}`}>
                   {proj.desc}
                 </p>
@@ -129,7 +129,7 @@ export default function WorkStrip() {
                   }`}
                   data-cursor="view"
                 >
-                  <span>Request Architecture Specs</span>
+                  <span>Request Specs</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>

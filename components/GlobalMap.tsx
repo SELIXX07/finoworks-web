@@ -1,6 +1,6 @@
 'use client';
 
-import { MapPin, Building2, Globe2, Compass } from 'lucide-react';
+import { MapPin, Globe2, Compass } from 'lucide-react';
 
 export default function GlobalMap() {
   const hubs = [
@@ -33,23 +33,20 @@ export default function GlobalMap() {
   const middleEast = ['Kuwait', 'Bahrain', 'Qatar', 'UAE (Dubai)', 'Saudi Arabia', 'Oman'];
 
   return (
-    <section className="py-28 bg-white border-b border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-4 max-w-2xl">
+    <section className="py-24 relative z-10 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto floating-surface p-8 md:p-14 space-y-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 home-reveal">
+          <div className="space-y-3 max-w-2xl">
             <div className="flex items-center gap-3 text-xs font-mono text-electric-500 font-bold uppercase tracking-widest">
-              <span>(03) Global Footprint & Expansion</span>
+              <span>(04) Global Footprint & Expansion</span>
               <span className="w-8 h-px bg-electric-500" />
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
               Global Engineering Hubs & 24/7 Coverage.
             </h2>
-            <p className="text-base text-slate-600">
-              Operated across strategic global centers to deliver continuous SWIFT support and rapid software engineering.
-            </p>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono text-slate-700">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100/90 border border-slate-200 text-xs font-mono text-slate-700">
             <Globe2 className="w-4 h-4 text-electric-500" />
             <span>4 CONTINENTS • 24/7 SUPPORT</span>
           </div>
@@ -60,7 +57,7 @@ export default function GlobalMap() {
           {hubs.map((hub, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-electric-500/50 transition-all duration-300 space-y-4"
+              className="p-6 rounded-2xl bg-slate-50/90 border border-slate-200 hover:border-electric-500/50 transition-all duration-300 space-y-4 home-reveal"
             >
               <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-electric-500 shadow-sm">
                 <MapPin className="w-5 h-5" />
@@ -78,7 +75,7 @@ export default function GlobalMap() {
         </div>
 
         {/* Middle East Expansion Highlight Box */}
-        <div className="p-8 rounded-2xl bg-gradient-to-r from-navy-900 to-slate-900 text-white space-y-6 shadow-xl">
+        <div className="p-8 md:p-10 rounded-2xl bg-gradient-to-r from-navy-900 via-slate-900 to-navy-900 text-white space-y-6 shadow-xl home-reveal">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-xs font-mono text-electric-400 font-bold uppercase tracking-wider">

@@ -4,6 +4,7 @@ import LenisProvider from '@/components/LenisProvider';
 import Cursor from '@/components/Cursor';
 import Preloader from '@/components/Preloader';
 import StarfieldGrain from '@/components/StarfieldGrain';
+import ScrollProgress from '@/components/ScrollProgress';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="antialiased selection:bg-electric-500 selection:text-white bg-white text-navy-900">
         <Preloader />
+        <ScrollProgress />
         <StarfieldGrain />
         <Cursor />
         <LenisProvider>

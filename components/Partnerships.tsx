@@ -1,6 +1,6 @@
 'use client';
 
-import { ShieldCheck, Award, Handshake, CheckCircle } from 'lucide-react';
+import { Award } from 'lucide-react';
 
 export default function Partnerships() {
   const credentials = [
@@ -19,11 +19,11 @@ export default function Partnerships() {
   ];
 
   return (
-    <section className="py-28 bg-white border-b border-slate-200/80">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
-        <div className="space-y-4 max-w-2xl">
+    <section className="py-24 relative z-10 px-6 md:px-12">
+      <div className="max-w-7xl mx-auto floating-surface p-8 md:p-14 space-y-16">
+        <div className="space-y-4 max-w-2xl home-reveal">
           <div className="flex items-center gap-3 text-xs font-mono text-electric-500 font-bold uppercase tracking-widest">
-            <span>(04) Trust, Credentials & Strategic Alliances</span>
+            <span>(05) Trust, Credentials & Strategic Alliances</span>
             <span className="w-8 h-px bg-electric-500" />
           </div>
           <h2 className="text-3xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
@@ -36,7 +36,7 @@ export default function Partnerships() {
           {credentials.map((cred, idx) => (
             <div
               key={idx}
-              className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3"
+              className="p-6 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 home-reveal"
             >
               <Award className="w-6 h-6 text-electric-500" />
               <h3 className="font-bold text-sm text-navy-900">{cred.title}</h3>
@@ -46,7 +46,7 @@ export default function Partnerships() {
         </div>
 
         {/* Partnerships Grid */}
-        <div className="pt-8 border-t border-slate-200 space-y-8">
+        <div className="pt-8 border-t border-slate-200 space-y-8 home-reveal">
           <h3 className="text-xs font-mono text-slate-500 uppercase tracking-widest font-bold">
             STRATEGIC PARTNERSHIPS & AGREEMENTS
           </h3>
