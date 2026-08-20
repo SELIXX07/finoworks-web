@@ -23,39 +23,84 @@ export default function StarfieldGrain() {
 
     window.addEventListener('resize', handleResize);
 
-    const stars: { x: number; y: number; size: number; alpha: number; speed: number }[] = [];
-    const count = 45;
+    // Static Stars
+    const starCount = 60;
+    const stars = Array.from({ length: starCount }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 1.5 + 0.5,
+      alpha: Math.random() * 0.5 + 0.1,
+      speed: Math.random() * 0.1 + 0.02,
+    }));
 
-    for (let i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1,
-        speed: Math.random() * 0.2 + 0.05,
-      });
-    }
+    // Shooting Star (DayNight pattern)
+    let shootingStar: {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      len: number;
+      life: number;
+      dur: number;
+    } | null = null;
+    let nextShoot = performance.now() + 2500;
 
-    const draw = () => {
+    const render = (time: number) => {
       ctx.clearRect(0, 0, width, height);
 
-      stars.forEach((star) => {
-        star.y -= star.speed;
-        if (star.y < 0) {
-          star.y = height;
-          star.x = Math.random() * width;
-        }
-
-        ctx.fillStyle = `rgba(0, 102, 255, ${star.alpha})`;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        ctx.fill();
+      // Render micro stars
+      stars.forEach((s) => {
+        s.alpha += s.speed;
+        const currentAlpha = Math.abs(Math.sin(s.alpha)) * 0.4 + 0.1;
+        ctx.fillStyle = `rgba(0, 102, 255, ${currentAlpha})`;
+        ctx.fillRect(s.x, s.y, s.size, s.size);
       });
 
-      animId = requestAnimationFrame(draw);
+      // Render shooting star
+      if (!shootingStar && time >= nextShoot) {
+        const angle = ((Math.random() * 20 + 25) * Math.PI) / 180;
+        shootingStar = {
+          x: Math.random() * width * 0.8,
+          y: Math.random() * height * 0.3,
+          vx: Math.cos(angle) * 2.2,
+          vy: Math.sin(angle) * 2.2,
+          len: Math.random() * 100 + 100,
+          life: 0,
+          dur: Math.random() * 400 + 500,
+        };
+      }
+
+      if (shootingStar) {
+        shootingStar.life += 16;
+        shootingStar.x += shootingStar.vx * 16;
+        shootingStar.y += shootingStar.vy * 16;
+        const progress = shootingStar.life / shootingStar.dur;
+
+        if (progress >= 1) {
+          shootingStar = null;
+          nextShoot = time + 5000 + Math.random() * 6000;
+        } else {
+          const fade = Math.sin(progress * Math.PI);
+          const tailX = shootingStar.x - shootingStar.vx * shootingStar.len;
+          const tailY = shootingStar.y - shootingStar.vy * shootingStar.len;
+
+          const grad = ctx.createLinearGradient(tailX, tailY, shootingStar.x, shootingStar.y);
+          grad.addColorStop(0, 'rgba(0, 102, 255, 0)');
+          grad.addColorStop(1, `rgba(0, 210, 255, ${fade * 0.8})`);
+
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(tailX, tailY);
+          ctx.lineTo(shootingStar.x, shootingStar.y);
+          ctx.stroke();
+        }
+      }
+
+      animId = requestAnimationFrame(render);
     };
 
-    draw();
+    animId = requestAnimationFrame(render);
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -67,7 +112,7 @@ export default function StarfieldGrain() {
     <>
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-0 opacity-60"
+        className="fixed inset-0 pointer-events-none z-0 h-screen w-screen"
         aria-hidden="true"
       />
       <div className="grain-overlay" aria-hidden="true" />
