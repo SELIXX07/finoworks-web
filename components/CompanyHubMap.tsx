@@ -34,35 +34,55 @@ const hubs = [
 
 type Hub = (typeof hubs)[number];
 
+const highlightedCountries = new Set([
+  'United States of America',
+  'Kenya',
+  'India',
+]);
+
 export default function CompanyHubMap() {
   const [activeHub, setActiveHub] = useState<Hub | null>(null);
 
   return (
-    <section className="relative w-full overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-xl">
-      <div className="relative aspect-[16/9] min-h-[360px] sm:min-h-[400px] w-full">
+    <section className="relative w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+      <div className="relative aspect-[16/8] w-full min-h-[360px]">
         <ComposableMap
           projection="geoMercator"
-          projectionConfig={{ scale: 145, center: [10, 8] }}
+          projectionConfig={{
+            scale: 145,
+            center: [10, 12],
+          }}
           width={1200}
           height={600}
           className="h-full w-full"
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill="#4D82D2"
-                  stroke="#FFFFFF"
-                  strokeWidth={0.7}
-                  style={{
-                    default: { outline: 'none' },
-                    hover: { fill: '#3D70BD', outline: 'none' },
-                    pressed: { fill: '#3564AA', outline: 'none' },
-                  }}
-                />
-              ))
+              geographies
+                .filter((geo) => geo.properties.name !== 'Antarctica')
+                .map((geo) => {
+                  const isHighlighted = highlightedCountries.has(
+                    geo.properties.name,
+                  );
+
+                  return (
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={isHighlighted ? '#4D82D2' : '#FFFFFF'}
+                      stroke="#D9E0EA"
+                      strokeWidth={0.55}
+                      style={{
+                        default: { outline: 'none' },
+                        hover: {
+                          fill: isHighlighted ? '#3D70BD' : '#F8FAFC',
+                          outline: 'none',
+                        },
+                        pressed: { outline: 'none' },
+                      }}
+                    />
+                  );
+                })
             }
           </Geographies>
 
@@ -72,16 +92,21 @@ export default function CompanyHubMap() {
               coordinates={hub.coordinates}
               onClick={() => setActiveHub(hub)}
             >
-              <g className="cursor-pointer" role="button" tabIndex={0}>
-                <circle r={15} fill="#DC2626" opacity={0.2} />
-                <circle r={8} fill="#DC2626" stroke="#FFFFFF" strokeWidth={2} />
+              <g
+                className="cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${hub.name} details`}
+              >
+                <circle r={13} fill="#DC2626" opacity={0.2} />
+                <circle r={7} fill="#DC2626" stroke="#FFFFFF" strokeWidth={2} />
                 <text
                   textAnchor="middle"
-                  y={4}
+                  y={3.5}
                   style={{
                     fontFamily: 'system-ui',
-                    fill: 'white',
-                    fontSize: 8,
+                    fill: '#FFFFFF',
+                    fontSize: 7,
                     fontWeight: 700,
                   }}
                 >
@@ -93,7 +118,7 @@ export default function CompanyHubMap() {
         </ComposableMap>
 
         {activeHub && (
-          <div className="absolute right-5 top-5 max-w-xs rounded-xl border bg-white/95 p-4 shadow-lg backdrop-blur z-20">
+          <div className="absolute right-4 top-4 z-10 max-w-xs rounded-xl border border-gray-200 bg-white/95 p-4 shadow-lg backdrop-blur">
             <button
               type="button"
               onClick={() => setActiveHub(null)}
@@ -108,25 +133,25 @@ export default function CompanyHubMap() {
         )}
       </div>
 
-      <div className="border-t border-slate-200 bg-white p-5 sm:p-6">
-        <h2 className="text-base font-bold text-gray-900">
+      <div className="border-t border-gray-200 bg-white p-5 sm:p-6">
+        <h2 className="text-lg font-semibold text-gray-900">
           Office & Center Details
         </h2>
 
-        <div className="mt-3 grid gap-3 sm:grid-cols-3">
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
           {hubs.map((hub, index) => (
             <button
               key={hub.id}
               type="button"
               onClick={() => setActiveHub(hub)}
-              className="flex items-start gap-2.5 rounded-lg p-2 text-left transition hover:bg-gray-50"
+              className="flex items-start gap-3 rounded-lg p-2 text-left transition hover:bg-gray-50"
             >
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-red-600 text-xs font-semibold text-white">
+              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-600 text-sm font-semibold text-white">
                 {index + 1}
               </span>
               <span>
-                <span className="block text-xs font-bold text-gray-900">{hub.name}</span>
-                <span className="mt-0.5 block text-[11px] text-gray-600 leading-tight">
+                <span className="block font-medium text-gray-900">{hub.name}</span>
+                <span className="mt-1 block text-sm text-gray-600">
                   {hub.address}
                 </span>
               </span>
