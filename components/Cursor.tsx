@@ -1,95 +1,120 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Cursor() {
-  const [pos, setPos] = useState({ x: -100, y: -100 });
-  const [trail, setTrail] = useState({ x: -100, y: -100 });
-  const [hovered, setHovered] = useState(false);
-  const [cursorText, setCursorText] = useState('');
-  const [isFinePointer, setIsFinePointer] = useState(false);
+  const dotRef = useRef<HTMLDivElement>(null);
+  const haloRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    // Check for fine pointer (mouse/trackpad on desktop)
     const mediaQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
-    setIsFinePointer(mediaQuery.matches);
-    if (mediaQuery.matches) {
-      document.body.classList.add('has-custom-cursor');
-    }
+    if (!mediaQuery.matches) return;
+
+    document.body.classList.add('has-custom-cursor');
+
+    let mouseX = -100;
+    let mouseY = -100;
+    let haloX = -100;
+    let haloY = -100;
+    let isHovered = false;
+    let currentBadge = '';
+    let animId: number;
 
     const handlePointerMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
+      mouseX = e.clientX;
+      mouseY = e.clientY;
 
+      // 1. Instant 0ms response on center dot
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      }
+
+      // 2. Check interactive hover target
       const target = e.target as HTMLElement | null;
-      const interactiveEl = target?.closest('a, button, [data-cursor], input');
+      const interactiveEl = target?.closest('a, button, [data-cursor], input, select, textarea');
 
       if (interactiveEl) {
-        setHovered(true);
+        isHovered = true;
         const customType = interactiveEl.getAttribute('data-cursor');
-        if (customType === 'view') setCursorText('VIEW');
-        else if (customType === 'spin') setCursorText('SPIN');
-        else if (customType === 'go') setCursorText('GO');
-        else setCursorText('');
+        if (customType === 'view') currentBadge = 'VIEW';
+        else if (customType === 'spin') currentBadge = 'SPIN';
+        else if (customType === 'go') currentBadge = 'GO';
+        else currentBadge = '';
       } else {
-        setHovered(false);
-        setCursorText('');
+        isHovered = false;
+        currentBadge = '';
+      }
+
+      // Update badge text if changed
+      if (textRef.current) {
+        textRef.current.textContent = currentBadge;
+      }
+
+      // Update halo styling classes directly on DOM
+      if (haloRef.current) {
+        if (currentBadge) {
+          haloRef.current.className =
+            'fixed top-0 left-0 rounded-full pointer-events-none z-[2000000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-[width,height,background-color,border] duration-150 w-14 h-14 bg-[#0055ff] text-white shadow-lg';
+        } else if (isHovered) {
+          haloRef.current.className =
+            'fixed top-0 left-0 rounded-full pointer-events-none z-[2000000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-[width,height,background-color,border] duration-150 w-11 h-11 bg-black/10 border border-black/30';
+        } else {
+          haloRef.current.className =
+            'fixed top-0 left-0 rounded-full pointer-events-none z-[2000000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-[width,height,background-color,border] duration-150 w-8 h-8 border border-black/25';
+        }
       }
     };
 
-    window.addEventListener('mousemove', handlePointerMove);
+    // 3. Ultra-responsive 120Hz/60Hz physics loop for trailing halo
+    const followLoop = () => {
+      // Fast snappy follow rate (0.42 multiplier)
+      haloX += (mouseX - haloX) * 0.42;
+      haloY += (mouseY - haloY) * 0.42;
+
+      if (haloRef.current) {
+        haloRef.current.style.transform = `translate3d(${haloX}px, ${haloY}px, 0)`;
+      }
+
+      animId = requestAnimationFrame(followLoop);
+    };
+
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
+    animId = requestAnimationFrame(followLoop);
 
     return () => {
       window.removeEventListener('mousemove', handlePointerMove);
+      cancelAnimationFrame(animId);
       document.body.classList.remove('has-custom-cursor');
     };
   }, []);
 
-  useEffect(() => {
-    if (!isFinePointer) return;
-    let animId: number;
-
-    const follow = () => {
-      setTrail((prev) => ({
-        x: prev.x + (pos.x - prev.x) * 0.16,
-        y: prev.y + (pos.y - prev.y) * 0.16,
-      }));
-      animId = requestAnimationFrame(follow);
-    };
-
-    animId = requestAnimationFrame(follow);
-    return () => cancelAnimationFrame(animId);
-  }, [pos, isFinePointer]);
-
-  if (!isFinePointer) return null;
-
   return (
     <>
-      {/* Center Dot */}
+      {/* Center Dot (Instant 0ms tracking) */}
       <div
-        className="fixed top-0 left-0 w-2 h-2 bg-black rounded-full pointer-events-none z-[2000001] -translate-x-1/2 -translate-y-1/2 transition-opacity duration-150"
+        ref={dotRef}
+        className="fixed top-0 left-0 w-2 h-2 bg-black rounded-full pointer-events-none z-[2000001] -translate-x-1/2 -translate-y-1/2"
         style={{
-          transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
-          opacity: hovered && cursorText ? 0 : 1,
+          transform: 'translate3d(-100px, -100px, 0)',
+          willChange: 'transform',
         }}
       />
 
-      {/* Kinetic Halo Ring */}
+      {/* Kinetic Halo Ring (Fast snappy lerp) */}
       <div
-        className={`fixed top-0 left-0 rounded-full pointer-events-none z-[2000000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center transition-all duration-200 ${
-          cursorText
-            ? 'w-16 h-16 bg-[#0055ff] text-white shadow-xl'
-            : hovered
-            ? 'w-12 h-12 bg-black/10 border border-black/30'
-            : 'w-8 h-8 border border-black/25'
-        }`}
+        ref={haloRef}
+        className="fixed top-0 left-0 w-8 h-8 border border-black/25 rounded-full pointer-events-none z-[2000000] -translate-x-1/2 -translate-y-1/2 flex items-center justify-center"
         style={{
-          transform: `translate3d(${trail.x}px, ${trail.y}px, 0)`,
+          transform: 'translate3d(-100px, -100px, 0)',
+          willChange: 'transform',
         }}
       >
-        {cursorText && (
-          <span className="font-mono text-[9px] font-bold tracking-widest leading-none">
-            {cursorText}
-          </span>
-        )}
+        <span
+          ref={textRef}
+          className="font-mono text-[9px] font-bold tracking-widest leading-none"
+        />
       </div>
     </>
   );
