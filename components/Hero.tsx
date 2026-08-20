@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
@@ -8,6 +9,16 @@ export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
   const [website, setWebsite] = useState('');
+  const router = useRouter();
+
+  const handleAuditSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (website.trim()) {
+      router.push(`/contact-us?bic=${encodeURIComponent(website.trim())}&service=SWIFT+CSP+v2026+Assessment`);
+    } else {
+      router.push('/csp-assessment-v2026');
+    }
+  };
 
   /* ─── Interactive Particle Orb for Light Theme ─── */
   useEffect(() => {
@@ -25,7 +36,6 @@ export default function Hero() {
     const CY = SIZE / 2;
     const R = SIZE * 0.42;
 
-    /* Golden-ratio sphere point distribution */
     const N = 560;
     const pts = Array.from({ length: N }, (_, i) => {
       const theta = Math.acos(1 - (2 * (i + 0.5)) / N);
@@ -41,7 +51,6 @@ export default function Hero() {
     const render = () => {
       ctx.clearRect(0, 0, SIZE, SIZE);
 
-      /* Ambient soft radial glow behind orb */
       const grd = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.15);
       grd.addColorStop(0, 'rgba(0, 85, 255, 0.12)');
       grd.addColorStop(0.5, 'rgba(0, 180, 216, 0.05)');
@@ -51,7 +60,6 @@ export default function Hero() {
       ctx.arc(CX, CY, R * 1.15, 0, Math.PI * 2);
       ctx.fill();
 
-      /* Orbital dashed rings */
       const rings = [
         { r: R * 1.06, rot: t * 0.005, tilt: 0.35, dash: [6, 8], opacity: 0.22 },
         { r: R * 1.22, rot: -t * 0.004, tilt: 0.7, dash: [3, 12], opacity: 0.14 },
@@ -72,11 +80,9 @@ export default function Hero() {
         ctx.restore();
       });
 
-      /* Mouse interaction */
       const mx = (mouseRef.current.x - 0.5) * 0.35;
       const my = (mouseRef.current.y - 0.5) * 0.35;
 
-      /* Render 3D node points */
       const sorted = pts
         .map((p) => {
           const cosY = Math.cos(t * 0.004 + mx);
@@ -96,7 +102,6 @@ export default function Hero() {
 
       sorted.forEach(({ sx, sy, z, size }) => {
         const norm = (z + 1) / 2;
-        /* Deep obsidian (back) → electric cobalt blue (front) */
         const red = Math.round(15 * (1 - norm));
         const green = Math.round(25 * (1 - norm) + 85 * norm);
         const blue = Math.round(50 * (1 - norm) + 255 * norm);
@@ -109,7 +114,6 @@ export default function Hero() {
         ctx.fill();
       });
 
-      /* TAP ME label */
       ctx.font = `600 11px 'Geist Mono', monospace`;
       ctx.fillStyle = '#0055ff';
       ctx.textAlign = 'center';
@@ -139,11 +143,9 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-start pt-28 pb-14 px-6 md:px-8 overflow-hidden bg-white">
-      {/* Hero 2-column grid */}
       <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-10 items-start">
         {/* ── LEFT COLUMN ── */}
         <div className="space-y-8 pt-4">
-          {/* Eyebrow pill */}
           <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 border border-slate-200 rounded-full px-4 py-2 bg-slate-50/80 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#0055ff] animate-pulse" />
             <span>SWIFT · ISO 20022 · COMPLIANCE</span>
@@ -151,7 +153,6 @@ export default function Hero() {
             <span className="text-[#0055ff] font-extrabold">CSP v2026</span>
           </div>
 
-          {/* H1 — Bold Pitch-Black Heading + Italic Accent */}
           <h1 className="font-sans text-[clamp(36px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-black">
             SWIFT Infrastructure<br />
             & Independent<br />
@@ -161,13 +162,12 @@ export default function Hero() {
             </em>
           </h1>
 
-          {/* Subtitle */}
           <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-[520px]">
             SWIFT Certified Provider. CISA-certified auditors auditing your CSCF v2026 controls, then engineering the remediation — so you pass the KYC Registry attestation on the first submission.
           </p>
 
-          {/* URL / BIC Input Bar */}
-          <div className="flex items-center gap-3 max-w-[540px]">
+          {/* BIC Form with query parameter routing */}
+          <form onSubmit={handleAuditSubmit} className="flex items-center gap-3 max-w-[540px]">
             <div className="flex-1 flex items-center gap-3 bg-slate-50 border border-slate-300 focus-within:border-[#0055ff] rounded-full px-5 py-3.5 transition-colors shadow-sm">
               <input
                 type="text"
@@ -177,21 +177,21 @@ export default function Hero() {
                 className="flex-1 bg-transparent text-sm text-black placeholder:text-slate-400 outline-none font-mono"
               />
             </div>
-            <Link
-              href="/csp-assessment-v2026"
+            <button
+              type="submit"
               className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-black text-white font-bold text-[13px] px-7 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg"
             >
-              Free Audit <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+              <span>Free Audit</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </form>
           <p className="font-mono text-[10px] text-slate-400 uppercase tracking-widest -mt-4 font-semibold">
             Free SWIFT CSP Gap Analysis & Audit Scope
           </p>
 
-          {/* Metrics bar */}
           <div className="flex flex-wrap items-center gap-0 pt-4 border-t border-slate-200">
             {[
-              { label: 'SINCE', val: '2009' },
+              { label: 'EXPERIENCE', val: '15+ Yrs Combined' },
               { label: 'FOCUS', val: 'SWIFT Compliance' },
               { label: 'TRACK RECORD', val: '100% Pass Rate' },
             ].map((m, i) => (
