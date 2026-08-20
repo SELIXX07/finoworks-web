@@ -26,16 +26,26 @@ export default function FaqAccordion() {
 
   return (
     <section className="px-6 md:px-8 py-28 max-w-[1600px] mx-auto">
-      <div className="section-head mb-10 home-reveal">
-        <span className="section-num">(05)</span>
-        <span>QUESTIONS, ANSWERED</span>
+      {/* Center Aligned Header */}
+      <div className="text-center space-y-4 max-w-2xl mx-auto mb-14 home-reveal">
+        <div className="section-head justify-center">
+          <span className="section-num">(05)</span>
+          <span>QUESTIONS, ANSWERED</span>
+        </div>
+        <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+          Frequently Asked Questions.
+        </h2>
+        <p className="text-sm text-slate-600 font-normal">
+          Clear answers regarding SWIFT CSP compliance, ISO 20022 cutover, and our independent assessment practice.
+        </p>
       </div>
 
-      <div className="max-w-4xl home-reveal">
+      {/* Center Aligned Accordion Container */}
+      <div className="max-w-3xl mx-auto home-reveal">
         {faqs.map((faq, idx) => (
           <details key={idx} className="faq-item group">
             <summary className="faq-summary">
-              <span>{faq.q}</span>
+              <span className="pr-4">{faq.q}</span>
               <span className="faq-icon font-mono">
                 +
               </span>

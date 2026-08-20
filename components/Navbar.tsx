@@ -48,7 +48,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-mono text-[14px] font-extrabold text-black tracking-tight hover:text-[#0055ff] transition-colors"
+          className="font-mono text-[14px] font-extrabold text-slate-900 tracking-tight hover:text-[#0055ff] transition-colors"
         >
           finoworks<span className="text-[#0055ff]">.</span>
         </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-[13px] text-slate-600 hover:text-black transition-colors font-medium"
+              className="text-[13px] text-slate-600 hover:text-slate-900 transition-colors font-semibold"
             >
               {l.label}
             </Link>
@@ -68,10 +68,10 @@ export default function Navbar() {
 
         {/* Right: Clock + CTA */}
         <div className="hidden md:flex items-center gap-5">
-          <span className="font-mono text-[11px] text-slate-400 tracking-wider font-semibold">{clock}</span>
+          <span className="font-mono text-[11px] text-slate-400 tracking-wider font-bold">{clock}</span>
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 bg-black text-white font-bold text-[13px] px-5 py-2.5 rounded-full hover:bg-[#0055ff] transition-all shadow-sm"
+            className="inline-flex items-center gap-2 bg-slate-900 hover:bg-[#0055ff] text-white font-bold text-[13px] px-5 py-2.5 rounded-full transition-all shadow-sm"
           >
             Book Assessment <ArrowRight className="w-3.5 h-3.5" />
           </Link>
@@ -79,7 +79,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-black"
+          className="md:hidden text-slate-900"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
@@ -94,7 +94,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-[15px] text-slate-700 hover:text-black transition-colors font-semibold"
+              className="text-[15px] text-slate-700 hover:text-slate-900 transition-colors font-bold"
               onClick={() => setMobileOpen(false)}
             >
               {l.label}
@@ -102,7 +102,7 @@ export default function Navbar() {
           ))}
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 bg-black text-white font-bold text-[14px] px-5 py-3 rounded-full w-fit mt-2"
+            className="inline-flex items-center gap-2 bg-slate-900 hover:bg-[#0055ff] text-white font-bold text-[14px] px-5 py-3 rounded-full w-fit mt-2"
             onClick={() => setMobileOpen(false)}
           >
             Book Assessment <ArrowRight className="w-3.5 h-3.5" />
