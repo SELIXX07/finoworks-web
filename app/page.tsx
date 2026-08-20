@@ -2,12 +2,10 @@ import Hero from '@/components/Hero';
 import Marquee from '@/components/Marquee';
 import PositionStatement from '@/components/PositionStatement';
 import WorkStrip from '@/components/WorkStrip';
-import ProductsMosaic from '@/components/ProductsMosaic';
-import GlobalMap from '@/components/GlobalMap';
 import StatsSection from '@/components/StatsSection';
-import Partnerships from '@/components/Partnerships';
-import ProcessSpine from '@/components/ProcessSpine';
-import Testimonials from '@/components/Testimonials';
+import ServiceQuadrantGrid from '@/components/ServiceQuadrantGrid';
+import StickySidebar from '@/components/StickySidebar';
+import FaqAccordion from '@/components/FaqAccordion';
 import CtaBanner from '@/components/CtaBanner';
 
 export default function HomePage() {
@@ -17,12 +15,10 @@ export default function HomePage() {
       <Marquee />
       <PositionStatement />
       <WorkStrip />
-      <ProductsMosaic />
-      <GlobalMap />
       <StatsSection />
-      <Partnerships />
-      <ProcessSpine />
-      <Testimonials />
+      <ServiceQuadrantGrid />
+      <StickySidebar />
+      <FaqAccordion />
       <CtaBanner />
     </>
   );

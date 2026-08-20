@@ -2,225 +2,230 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, ArrowRight, Activity, Globe, Lock, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [orbTapActive, setOrbTapActive] = useState(false);
+  const mouseRef = useRef({ x: 0.5, y: 0.5 });
+  const [website, setWebsite] = useState('');
 
+  /* ─── Interactive Particle Orb (FinoWorks blue-cyan gradient) ─── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = 650);
-    let height = (canvas.height = 650);
+    let animId: number;
+    let t = 0;
+    const SIZE = Math.min(600, window.innerWidth * 0.44);
+    canvas.width = SIZE;
+    canvas.height = SIZE;
+    const CX = SIZE / 2;
+    const CY = SIZE / 2;
+    const R = SIZE * 0.44;
 
-    const nodes: { x: number; y: number; z: number; baseR: number; alphaOffset: number }[] = [];
-    const numNodes = 110;
-
-    for (let i = 0; i < numNodes; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(Math.random() * 2 - 1);
-      const r = 230;
-      nodes.push({
-        x: r * Math.sin(phi) * Math.cos(theta),
-        y: r * Math.sin(phi) * Math.sin(theta),
-        z: r * Math.cos(phi),
-        baseR: r,
-        alphaOffset: Math.random() * Math.PI * 2,
-      });
-    }
-
-    let angleY = 0.0035;
-    let angleX = 0.002;
-    let time = 0;
+    /* Golden-ratio sphere point distribution */
+    const N = 520;
+    const pts = Array.from({ length: N }, (_, i) => {
+      const theta = Math.acos(1 - (2 * (i + 0.5)) / N);
+      const phi = Math.PI * (1 + Math.sqrt(5)) * i;
+      return {
+        ox: Math.sin(theta) * Math.cos(phi),
+        oy: Math.sin(theta) * Math.sin(phi),
+        oz: Math.cos(theta),
+        size: Math.random() * 2.5 + 0.8,
+      };
+    });
 
     const render = () => {
-      time += 0.02;
-      ctx.clearRect(0, 0, width, height);
+      ctx.clearRect(0, 0, SIZE, SIZE);
 
-      const cx = width / 2;
-      const cy = height / 2;
-
-      // Draw inner glowing core
-      const coreGrad = ctx.createRadialGradient(cx, cy, 30, cx, cy, 240);
-      coreGrad.addColorStop(0, 'rgba(0, 210, 255, 0.25)');
-      coreGrad.addColorStop(0.5, 'rgba(0, 102, 255, 0.1)');
-      coreGrad.addColorStop(1, 'rgba(0, 102, 255, 0)');
-      ctx.fillStyle = coreGrad;
+      /* Ambient glow */
+      const grd = ctx.createRadialGradient(CX, CY, 0, CX, CY, R * 1.1);
+      grd.addColorStop(0, 'rgba(0,102,255,0.18)');
+      grd.addColorStop(0.5, 'rgba(0,210,255,0.06)');
+      grd.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grd;
       ctx.beginPath();
-      ctx.arc(cx, cy, 240, 0, Math.PI * 2);
+      ctx.arc(CX, CY, R * 1.1, 0, Math.PI * 2);
       ctx.fill();
 
-      const projected: { x: number; y: number; z: number; alphaOffset: number }[] = [];
+      /* Orbit rings */
+      const rings = [
+        { r: R * 1.05, rot: t * 0.006, tilt: 0.3, dash: [6, 8], opacity: 0.18 },
+        { r: R * 1.2,  rot: -t * 0.004, tilt: 0.7, dash: [3, 12], opacity: 0.1 },
+        { r: R * 1.38, rot: t * 0.003,  tilt: 0.15, dash: [10, 14], opacity: 0.06 },
+      ];
 
-      nodes.forEach((node) => {
-        let x1 = node.x * Math.cos(angleY) - node.z * Math.sin(angleY);
-        let z1 = node.z * Math.cos(angleY) + node.x * Math.sin(angleY);
-
-        let y2 = node.y * Math.cos(angleX) - z1 * Math.sin(angleX);
-        let z2 = z1 * Math.cos(angleX) + node.y * Math.sin(angleX);
-
-        node.x = x1;
-        node.y = y2;
-        node.z = z2;
-
-        const scale = 320 / (320 + z2);
-        projected.push({
-          x: cx + x1 * scale,
-          y: cy + y2 * scale,
-          z: z2,
-          alphaOffset: node.alphaOffset,
-        });
+      rings.forEach(({ r, rot, tilt, dash, opacity }) => {
+        ctx.save();
+        ctx.translate(CX, CY);
+        ctx.rotate(rot);
+        ctx.scale(1, Math.abs(Math.sin(tilt)));
+        ctx.strokeStyle = `rgba(0,210,255,${opacity})`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash(dash);
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
       });
 
-      // Draw node connection lines
-      ctx.lineWidth = 0.6;
-      for (let i = 0; i < projected.length; i++) {
-        for (let j = i + 1; j < projected.length; j++) {
-          const dx = projected[i].x - projected[j].x;
-          const dy = projected[i].y - projected[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      /* Mouse influence */
+      const mx = (mouseRef.current.x - 0.5) * 0.3;
+      const my = (mouseRef.current.y - 0.5) * 0.3;
 
-          if (dist < 80) {
-            const alpha = (1 - dist / 80) * 0.35;
-            ctx.strokeStyle = `rgba(0, 102, 255, ${alpha})`;
-            ctx.beginPath();
-            ctx.moveTo(projected[i].x, projected[i].y);
-            ctx.lineTo(projected[j].x, projected[j].y);
-            ctx.stroke();
-          }
-        }
-      }
+      /* Render points */
+      const sorted = pts
+        .map((p) => {
+          /* Y-axis rotation */
+          const cosY = Math.cos(t * 0.004 + mx);
+          const sinY = Math.sin(t * 0.004 + mx);
+          let x = p.ox * cosY - p.oz * sinY;
+          let z = p.ox * sinY + p.oz * cosY;
+          let y = p.oy;
 
-      // Draw node points
-      projected.forEach((p) => {
-        const radius = Math.max(1.5, ((p.z + 230) / 460) * 3.5);
-        const pulse = (Math.sin(time + p.alphaOffset) + 1) / 2;
-        const alpha = ((p.z + 230) / 460) * 0.6 + pulse * 0.4;
+          /* X-axis rotation */
+          const cosX = Math.cos(my * 0.5);
+          const sinX = Math.sin(my * 0.5);
+          const y2 = y * cosX - z * sinX;
+          const z2 = y * sinX + z * cosX;
 
-        ctx.fillStyle = p.z > 50 ? `rgba(0, 210, 255, ${alpha})` : `rgba(0, 102, 255, ${alpha})`;
+          return { sx: CX + x * R, sy: CY + y2 * R, z: z2, size: p.size };
+        })
+        .sort((a, b) => a.z - b.z);
+
+      sorted.forEach(({ sx, sy, z, size }) => {
+        const norm = (z + 1) / 2;
+        /* Color: deep navy (back) → blue → cyan (front) */
+        const r = Math.round(0 + norm * 0);
+        const g = Math.round(50 + norm * 160);
+        const bl = Math.round(200 + norm * 55);
+        const alpha = 0.18 + norm * 0.82;
+        const s = size * (0.4 + norm * 0.8);
+        ctx.fillStyle = `rgba(${r},${g},${bl},${alpha})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+        ctx.arc(sx, sy, s, 0, Math.PI * 2);
         ctx.fill();
       });
 
-      animationFrameId = requestAnimationFrame(render);
+      /* TAP ME label */
+      ctx.font = `bold 11px 'Geist Mono', monospace`;
+      ctx.fillStyle = 'rgba(0,210,255,0.5)';
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '0.15em';
+      ctx.fillText('TAP ME', CX, CY + 6);
+
+      t++;
+      animId = requestAnimationFrame(render);
     };
 
-    render();
+    animId = requestAnimationFrame(render);
 
-    return () => cancelAnimationFrame(animationFrameId);
+    const handleMouse = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height,
+      };
+    };
+    canvas.addEventListener('mousemove', handleMouse);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      canvas.removeEventListener('mousemove', handleMouse);
+    };
   }, []);
 
   return (
-    <header className="relative pt-32 pb-20 md:pt-48 md:pb-36 overflow-hidden bg-gradient-to-b from-white via-slate-50/70 to-white">
-      {/* Background Mesh Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-60 pointer-events-none" />
+    <section className="relative min-h-screen flex items-start pt-28 pb-12 px-6 md:px-8 overflow-hidden">
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Typography & CTAs (DayNight Style) */}
-          <div className="lg:col-span-7 space-y-8 text-left">
-            {/* Status Eyebrow */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-slate-100/90 border border-slate-200 text-xs font-mono text-slate-700 shadow-sm backdrop-blur-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>SWIFT CERTIFIED CSP PROVIDER 2026</span>
-              <span className="text-slate-300">/</span>
-              <span className="text-electric-600 font-bold">100% STP COMPLIANT</span>
-            </div>
+      {/* Hero 2-column grid */}
+      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-8 items-start">
 
-            {/* Main Display Headline with Serif emphasis */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-navy-900 tracking-tight leading-[1.05]">
-              Securing the Future of{' '}
-              <em className="font-serif italic font-normal text-electric-500 underline decoration-electric-200 underline-offset-8">
-                Global Financial
-              </em>{' '}
-              Messaging.
-            </h1>
+        {/* ── LEFT COLUMN ── */}
+        <div className="space-y-8 pt-4">
 
-            {/* Subhead */}
-            <p className="text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed">
-              Expert-led SWIFT Alliance Integration, ISO 20022 MT-to-MX Migration, and Authorized Independent CSP Assessments for Tier-1 Banks & Financial Institutions.
-            </p>
-
-            {/* Fixed Offer & Action Bar */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <Link
-                href="/contact-us"
-                className="bg-navy-900 hover:bg-electric-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg hover:shadow-electric-500/25 transition-all duration-300 flex items-center justify-center gap-3 group text-sm"
-                data-cursor="go"
-              >
-                <span>Get Assessment Ready</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-
-              <Link
-                href="/iso-20022-migration"
-                className="bg-white hover:bg-slate-100 text-navy-900 border border-slate-300 font-bold px-8 py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 text-sm shadow-sm"
-                data-cursor="view"
-              >
-                <span>Test Live MX Converter</span>
-              </Link>
-            </div>
-
-            {/* Trust Pill Badges */}
-            <div className="pt-8 border-t border-slate-200/90 grid grid-cols-3 gap-4">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <ShieldCheck className="w-4 h-4 text-electric-500 flex-shrink-0" />
-                <span>CISA Certified Auditors</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <Activity className="w-4 h-4 text-electric-500 flex-shrink-0" />
-                <span>Zero Downtime Migration</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                <Globe className="w-4 h-4 text-electric-500 flex-shrink-0" />
-                <span>24/7 Global Infrastructure</span>
-              </div>
-            </div>
+          {/* Eyebrow pill — DayNight style */}
+          <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-semibold uppercase tracking-wider text-white/50 border border-white/10 rounded-full px-4 py-2 bg-white/[0.03]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00d2ff] animate-pulse" />
+            <span>SWIFT · ISO 20022 · COMPLIANCE</span>
+            <span className="text-white/25">/</span>
+            <span className="text-[#0066ff] font-bold">CSP v2026</span>
           </div>
 
-          {/* Right Column: DayNight Concentric Rotating Ring Orb Visualizer */}
-          <div className="lg:col-span-5 relative flex items-center justify-center select-none">
-            <div
-              className={`relative w-full max-w-[480px] aspect-square flex items-center justify-center cursor-pointer transition-transform duration-300 ${
-                orbTapActive ? 'scale-95' : 'hover:scale-105'
-              }`}
-              onClick={() => {
-                setOrbTapActive(true);
-                setTimeout(() => setOrbTapActive(false), 200);
-              }}
-              data-cursor="spin"
-            >
-              {/* Concentric Rotating Orbital Rings (DayNight pattern) */}
-              <div className="orb-ring orb-ring-1" />
-              <div className="orb-ring orb-ring-2" />
-              <div className="orb-ring orb-ring-3" />
+          {/* H1 — DayNight size and mixed serif */}
+          <h1 className="font-sans text-[clamp(36px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-white/95">
+            SWIFT Infrastructure<br />
+            & Independent<br />
+            CSP Assessments{' '}
+            <em className="font-serif font-normal italic text-[#00d2ff] not-italic">
+              That Certify.
+            </em>
+          </h1>
 
-              {/* 3D Rotating Node Particle Canvas */}
-              <canvas
-                ref={canvasRef}
-                className="w-full h-full object-contain pointer-events-none drop-shadow-2xl relative z-10"
+          {/* Subtitle */}
+          <p className="text-[clamp(15px,1.4vw,18px)] text-white/50 leading-relaxed max-w-[500px]">
+            SWIFT Certified Provider. CISA-certified auditors auditing your CSCF v2026 controls, then engineering the remediation — so you pass the KYC Registry attestation on the first submission.
+          </p>
+
+          {/* URL Input Bar — DayNight audit input */}
+          <div className="flex items-center gap-3 max-w-[520px]">
+            <div className="flex-1 flex items-center gap-3 bg-white/[0.05] border border-white/10 rounded-full px-5 py-3.5 backdrop-blur-sm">
+              <input
+                type="text"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                placeholder="Enter your BIC or institution name…"
+                className="flex-1 bg-transparent text-sm text-white/80 placeholder:text-white/25 outline-none font-mono"
               />
-
-              {/* Floating Telemetry Badge */}
-              <div className="absolute -bottom-4 left-4 bg-white/95 backdrop-blur-md p-4 rounded-xl border border-slate-200/90 shadow-xl space-y-1 text-left z-20">
-                <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-600 font-bold">
-                  <Lock className="w-3.5 h-3.5" />
-                  <span>SECURE ZONE • CSCF v2026 ACTIVE</span>
-                </div>
-                <div className="text-xs text-slate-600 font-medium">
-                  Nairobi HQ • Bangalore Dev Center • USA Hub
-                </div>
-              </div>
             </div>
+            <Link
+              href="/csp-assessment-v2026"
+              className="inline-flex items-center gap-2 bg-[#0066ff] hover:bg-[#0055dd] text-white font-bold text-[13px] px-6 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap"
+            >
+              Free Audit <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+          <p className="font-mono text-[10px] text-white/25 uppercase tracking-widest -mt-4">
+            Free SWIFT CSP Gap Analysis
+          </p>
+
+          {/* Metrics bar — DayNight style */}
+          <div className="flex flex-wrap items-center gap-0 pt-4">
+            {[
+              { label: 'SINCE', val: '2009' },
+              { label: 'FOCUS', val: 'SWIFT Compliance' },
+              { label: 'TRACK RECORD', val: '100% Pass Rate' },
+            ].map((m, i) => (
+              <div key={i} className="flex items-center">
+                <div className="pr-6 md:pr-10">
+                  <div className="text-[10px] font-mono uppercase tracking-widest text-white/30">{m.label}</div>
+                  <div className="text-[15px] font-bold text-white/80 mt-0.5">{m.val}</div>
+                </div>
+                {i < 2 && <div className="w-px h-8 bg-white/10 mr-6 md:mr-10 hidden sm:block" />}
+              </div>
+            ))}
+            <Link
+              href="/about-us"
+              className="ml-auto text-[13px] text-white/35 hover:text-white/70 transition-colors font-medium flex items-center gap-1"
+            >
+              Our story <ArrowRight className="w-3 h-3" />
+            </Link>
           </div>
         </div>
+
+        {/* ── RIGHT COLUMN — Particle Orb ── */}
+        <div className="relative flex items-center justify-center lg:justify-end pt-0 lg:-mt-8">
+          <canvas
+            ref={canvasRef}
+            className="select-none"
+            style={{ maxWidth: '100%', height: 'auto' }}
+            data-cursor="spin"
+          />
+        </div>
       </div>
-    </header>
+    </section>
   );
 }

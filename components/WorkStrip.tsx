@@ -2,140 +2,169 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, ArrowLeft } from 'lucide-react';
+
+const projects = [
+  {
+    idx: '01',
+    category: 'CLIENT WORK',
+    type: 'SWIFT INFRASTRUCTURE',
+    year: '2026',
+    client: 'Kenya Commercial Bank',
+    title: 'Active-Active Disaster Recovery for SWIFT Alliance Access',
+    desc: 'Dual-site failover architecture achieving 99.999% uptime during core banking outages.',
+    tags: ['ACTIVE FAILOVER', 'SAA v7.5', 'DR RUNBOOK'],
+    stat: '99.999% Uptime',
+  },
+  {
+    idx: '02',
+    category: 'CLIENT WORK',
+    type: 'CSP v2026 ASSESSMENT',
+    year: '2026',
+    client: 'Tier-1 Commercial Bank',
+    title: 'CSCF v2026 Independent Audit — 32 Controls, Zero Flags',
+    desc: 'Full CISA-certified audit with KYC Registry submission and mandatory remediation engineering.',
+    tags: ['32 CSCF CONTROLS', 'CISA CERTIFIED', 'KYC REGISTRY'],
+    stat: 'Passed on First Filing',
+  },
+  {
+    idx: '03',
+    category: 'CLIENT WORK',
+    type: 'ISO 20022 MIGRATION',
+    year: '2025',
+    client: 'Regional Development Bank',
+    title: 'MT103 → pacs.008 MX Migration with Zero Downtime',
+    desc: 'Full cutover from legacy MT messaging to structured XML with STP pipeline validation.',
+    tags: ['PACS.008', 'MT103', 'ZERO DOWNTIME'],
+    stat: '100% STP Processing',
+  },
+  {
+    idx: '04',
+    category: 'STUDIO WORK',
+    type: 'MIDDLEWARE',
+    year: '2026',
+    client: 'Pan-African Financial Group',
+    title: 'Enterprise Payment Hub — SIL to AutoClient Migration',
+    desc: 'Automated file transfer pipeline modernizing legacy SWIFT Integration Layer to Alliance Gateway.',
+    tags: ['AUTOLIENT', 'SIL', 'T24 INTEGRATION'],
+    stat: '4 Banks Onboarded',
+  },
+];
 
 export default function WorkStrip() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const projects = [
-    {
-      idx: '01',
-      title: 'Disaster Recovery & Active-Active Failover',
-      category: 'Infrastructure',
-      year: '2026',
-      desc: 'Designed dual-site active-active automated failover architecture for SWIFT Alliance Access (SAA) ensuring zero data loss during core network outages.',
-      stats: '99.999% Uptime Achieved',
-    },
-    {
-      idx: '02',
-      title: 'Anti-Fraud RMA & Transaction Surveillance',
-      category: 'Security',
-      year: '2025',
-      desc: 'Implemented strict Relationship Management Application (RMA) controls and real-time transaction monitoring to prevent fraudulent payment flows.',
-      stats: '100% Fraud Interception',
-    },
-    {
-      idx: '03',
-      title: 'SIL & IPLA Automated Middleware Migration',
-      category: 'Middleware',
-      year: '2026',
-      desc: 'Modernized legacy SWIFT Integration Layer (SIL) with AutoClient automated file transfer pipeline connecting Temenos T24 to Alliance Gateway.',
-      stats: '100% STP Processing',
-    },
-    {
-      idx: '04',
-      title: 'Tier-1 Commercial Bank CSP v2026 Assessment',
-      category: 'Compliance',
-      year: '2026',
-      desc: 'Conducted authorized independent CISA audit against 32 mandatory CSCF controls with full KYC Registry submission and zero compliance flags.',
-      stats: 'Passed Audit on First Filing',
-    },
-  ];
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % projects.length);
-  };
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
+  const [active, setActive] = useState(0);
 
   return (
-    <section className="py-24 relative z-10 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto floating-surface p-8 md:p-14 space-y-12">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 home-reveal">
-          <div className="space-y-3 max-w-2xl">
-            <div className="flex items-center gap-3 text-xs font-mono text-electric-500 font-bold uppercase tracking-widest">
-              <span>(02) Selected Case Studies & Deployments</span>
-              <span className="w-8 h-px bg-electric-500" />
-            </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-navy-900 tracking-tight">
-              Proven Architecture in Production.
-            </h2>
-          </div>
+    <section className="px-6 md:px-8 py-8 max-w-[1600px] mx-auto">
 
-          {/* Carousel Controls */}
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-xs font-bold text-slate-500">
-              <strong className="text-navy-900 text-sm">0{activeIndex + 1}</strong> / 0{projects.length}
-            </span>
-            <div className="flex gap-2">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-xl bg-slate-100/90 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
-                aria-label="Previous project"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-xl bg-slate-100/90 hover:bg-navy-900 hover:text-white transition-colors flex items-center justify-center border border-slate-200"
-                aria-label="Next project"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
+      {/* Counter + Controls — DayNight top-right pattern */}
+      <div className="flex items-center justify-between mb-8 home-reveal">
+        <div className="section-head">
+          <span className="section-num">(02)</span>
+          <span>RESULTS</span>
         </div>
-
-        {/* Horizontal Strip Track */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {projects.map((proj, idx) => (
-            <div
-              key={idx}
-              className={`p-7 rounded-2xl border transition-all duration-300 flex flex-col justify-between space-y-6 home-reveal ${
-                idx === activeIndex
-                  ? 'bg-slate-900 text-white border-slate-800 shadow-2xl scale-[1.02]'
-                  : 'bg-slate-50/80 text-navy-900 border-slate-200 hover:border-electric-500/50'
-              }`}
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-[13px] text-white/35">
+            <strong className="text-white/80 text-base">{String(active + 1).padStart(2, '0')}</strong> / {String(projects.length).padStart(2, '0')}
+          </span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActive((p) => (p - 1 + projects.length) % projects.length)}
+              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
             >
-              <div className="space-y-4">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className={idx === activeIndex ? 'text-electric-400 font-bold' : 'text-slate-400 font-bold'}>
-                    {proj.idx}
-                  </span>
-                  <span className={`px-2.5 py-1 rounded text-[10px] font-bold ${
-                    idx === activeIndex ? 'bg-slate-800 text-electric-300' : 'bg-white border border-slate-200 text-slate-600'
-                  }`}>
-                    {proj.category} • {proj.year}
-                  </span>
-                </div>
+              <ArrowLeft className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => setActive((p) => (p + 1) % projects.length)}
+              className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        </div>
+      </div>
 
-                <h3 className="text-lg font-bold leading-snug">{proj.title}</h3>
-                <p className={`text-xs leading-relaxed ${idx === activeIndex ? 'text-slate-300' : 'text-slate-600'}`}>
-                  {proj.desc}
-                </p>
+      {/* Italic teaser — DayNight sub-label */}
+      <p className="font-serif italic text-[15px] text-white/35 mb-10 home-reveal">
+        Live client deployments first — SWIFT, ISO 20022, CSP — then studio pilot programmes.
+      </p>
+
+      {/* Cards grid — DayNight browser-screenshot style */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[1px] bg-white/[0.07] rounded-2xl overflow-hidden home-reveal">
+        {projects.map((p, i) => (
+          <div
+            key={i}
+            className={`p-7 flex flex-col justify-between min-h-[360px] transition-all duration-300 cursor-pointer ${
+              i === active
+                ? 'bg-[#0066ff] text-white'
+                : 'bg-[#0a1929] text-white/75 hover:bg-[#0c1f35]'
+            }`}
+            onClick={() => setActive(i)}
+          >
+            <div className="space-y-4">
+              {/* Top meta */}
+              <div className="flex justify-between items-start">
+                <span className={`font-mono text-[10px] font-bold ${i === active ? 'text-white/60' : 'text-white/30'}`}>
+                  {p.idx}
+                </span>
+                <span className={`font-mono text-[9px] font-bold px-2 py-1 rounded ${
+                  i === active ? 'bg-white/15 text-white' : 'bg-white/5 text-white/40'
+                }`}>
+                  {p.category} · {p.year}
+                </span>
               </div>
 
-              <div className="pt-4 border-t border-slate-200/20 space-y-2">
-                <div className={`text-[11px] font-mono font-bold ${idx === activeIndex ? 'text-emerald-400' : 'text-electric-600'}`}>
-                  ✓ {proj.stats}
-                </div>
-                <Link
-                  href="/contact-us"
-                  className={`inline-flex items-center gap-1 text-xs font-bold ${
-                    idx === activeIndex ? 'text-white hover:text-electric-300' : 'text-navy-900 hover:text-electric-500'
-                  }`}
-                  data-cursor="view"
-                >
-                  <span>Request Specs</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+              {/* Client domain bar (simulates browser screenshot) */}
+              <div className={`rounded-lg px-3 py-2 font-mono text-[10px] ${
+                i === active ? 'bg-white/10 text-white/70' : 'bg-white/5 text-white/30'
+              }`}>
+                ● {p.client.toLowerCase().replace(/ /g, '')}.com
+              </div>
+
+              <div className={`text-[10px] font-mono font-bold uppercase tracking-widest ${
+                i === active ? 'text-[#00d2ff]' : 'text-white/30'
+              }`}>
+                {p.type}
+              </div>
+
+              <h3 className="font-serif italic text-[clamp(16px,1.6vw,20px)] leading-snug font-normal">
+                {p.title}
+              </h3>
+
+              <p className={`text-[12px] leading-relaxed ${i === active ? 'text-white/70' : 'text-white/40'}`}>
+                {p.desc}
+              </p>
+            </div>
+
+            {/* Bottom */}
+            <div className="space-y-3 pt-4">
+              <div className="flex flex-wrap gap-1.5">
+                {p.tags.map((tag, ti) => (
+                  <span
+                    key={ti}
+                    className={`text-[9px] font-mono font-bold px-2 py-1 rounded ${
+                      i === active ? 'bg-white/15 text-white' : 'bg-white/5 text-white/40'
+                    }`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className={`font-mono text-[10px] font-bold ${i === active ? 'text-[#00d2ff]' : 'text-white/25'}`}>
+                ✓ {p.stat}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 home-reveal">
+        <Link
+          href="/contact-us"
+          className="text-[13px] text-white/35 hover:text-white/70 transition-colors font-medium flex items-center gap-1.5"
+        >
+          See all case studies <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
     </section>
   );

@@ -1,28 +1,67 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
+
+const stats = [
+  { val: 15, suffix: '+', label: 'YEARS OF SWIFT EXPERIENCE' },
+  { val: 100, suffix: '%', label: 'CSP PASS RATE' },
+  { val: 32, suffix: '', label: 'CSCF v2026 CONTROLS COVERED' },
+  { val: 4, suffix: '', label: 'GLOBAL ENGINEERING HUBS' },
+];
+
+function useCountUp(target: number, triggered: boolean) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!triggered) return;
+    let start = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { setCount(target); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 16);
+    return () => clearInterval(timer);
+  }, [target, triggered]);
+  return count;
+}
+
+function StatItem({ val, suffix, label, triggered }: typeof stats[0] & { triggered: boolean }) {
+  const count = useCountUp(val, triggered);
+  return (
+    <div className="flex-1 text-center md:text-left px-6 md:px-10 py-6">
+      <div className="font-sans text-[clamp(48px,6vw,88px)] font-extrabold leading-none text-white/90 tracking-tight">
+        {count}<span className="text-[#0066ff]">{suffix}</span>
+      </div>
+      <div className="font-mono text-[10px] text-white/30 uppercase tracking-widest mt-3">{label}</div>
+    </div>
+  );
+}
+
 export default function StatsSection() {
-  const stats = [
-    { label: 'Financial Messages Processed', value: '65,000+' },
-    { label: 'ISO 20022 Migration Success Rate', value: '100%' },
-    { label: 'SWIFT Domain Experience', value: '15+ Yrs' },
-    { label: 'Threat Prevention Rate', value: '99.9%' },
-  ];
+  const ref = useRef<HTMLDivElement>(null);
+  const [triggered, setTriggered] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setTriggered(true); },
+      { threshold: 0.3 }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <section className="py-20 bg-navy-900 text-white border-y border-navy-700">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="pt-6 md:pt-0 md:px-4 space-y-2">
-              <div className="text-4xl md:text-5xl font-extrabold text-electric-400 font-mono tracking-tight">
-                {stat.value}
-              </div>
-              <div className="text-xs font-medium text-slate-300 uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
+    <section ref={ref} className="border-y border-white/[0.08]">
+      {/* 4-col stat bar with | separators — DayNight style, no card wrapper */}
+      <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row divide-y md:divide-y-0 divide-white/[0.08]">
+        {stats.map((s, i) => (
+          <div key={i} className="flex flex-1 items-stretch">
+            <StatItem {...s} triggered={triggered} />
+            {i < stats.length - 1 && (
+              <div className="hidden md:block w-px self-stretch bg-white/[0.08]" />
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );

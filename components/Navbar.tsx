@@ -1,188 +1,119 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShieldCheck, ArrowRight, Menu, X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ArrowRight, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-  const [time, setTime] = useState('');
+  const [clock, setClock] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const updateTime = () => {
+    const tick = () => {
       const now = new Date();
-      setTime(
-        now.toLocaleTimeString('en-US', {
-          timeZone: 'UTC',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-        }) + ' UTC'
-      );
+      const h = String(now.getUTCHours()).padStart(2, '0');
+      const m = String(now.getUTCMinutes()).padStart(2, '0');
+      const s = String(now.getUTCSeconds()).padStart(2, '0');
+      setClock(`${h}:${m}:${s} UTC`);
     };
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('scroll', handleScroll);
-    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  const navLinks = [
+    { label: 'Services', href: '/services' },
+    { label: 'ISO 20022', href: '/iso-20022-migration' },
+    { label: 'CSP v2026', href: '/csp-assessment-v2026' },
+    { label: 'About', href: '/about-us' },
+    { label: 'Contact', href: '/contact-us' },
+  ];
+
   return (
-    <nav
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/80 backdrop-blur-md border-b border-slate-200/80 py-3.5 shadow-sm'
-          : 'bg-transparent py-5'
+          ? 'border-b border-white/[0.08] backdrop-blur-xl bg-[#05101f]/80'
+          : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group"
-          data-cursor="home"
-        >
-          <div className="w-10 h-10 rounded-xl bg-navy-900 text-white flex items-center justify-center font-extrabold text-xl shadow-md group-hover:bg-electric-500 transition-colors">
-            F
-          </div>
-          <div className="flex flex-col">
-            <span className="font-extrabold text-lg tracking-tight text-navy-900 leading-none">
-              Fino<span className="text-electric-500">Works</span>
-            </span>
-            <span className="text-[10px] font-mono text-slate-500 tracking-wider">
-              TECHNOLOGIES
-            </span>
-          </div>
-        </Link>
-
-        {/* Navigation Links */}
-        <div className="hidden md:flex items-center gap-8 text-xs font-semibold uppercase tracking-wider text-slate-600">
-          <Link
-            href="/services"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            Services
-          </Link>
-          <Link
-            href="/iso-20022-migration"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            ISO 20022
-          </Link>
-          <Link
-            href="/csp-assessment-v2026"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            CSP v2026
-          </Link>
-          <Link
-            href="/about-us"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            About Us
-          </Link>
-          <Link
-            href="/careers"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            Careers
-          </Link>
-          <Link
-            href="/insights"
-            className="hover:text-electric-500 transition-colors"
-            data-cursor="view"
-          >
-            Insights
-          </Link>
-        </div>
-
-        {/* Right CTA & UTC Clock */}
-        <div className="hidden md:flex items-center gap-6">
-          <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span>{time || '00:00:00 UTC'}</span>
-          </div>
-
-          <Link
-            href="/contact-us"
-            className="bg-navy-900 hover:bg-electric-500 text-white text-xs font-bold px-5 py-2.5 rounded-lg transition-all duration-300 flex items-center gap-2 shadow-sm hover:shadow-md hover:shadow-electric-500/20"
-            data-cursor="go"
-          >
-            <span>Book Assessment</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        {/* Mobile Toggle Button */}
-        <button
-          className="md:hidden text-navy-900 p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+      {/* Scroll Progress Bar */}
+      <div className="h-[2px] w-full bg-transparent absolute top-0 left-0 right-0 z-10">
+        <div id="scroll-bar" className="h-full bg-gradient-to-r from-[#0066ff] via-[#00d2ff] to-[#0066ff] w-0 transition-all duration-75" />
       </div>
 
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-6 py-6 space-y-4">
-          <Link
-            href="/services"
-            className="block text-sm font-semibold text-slate-700"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Services
-          </Link>
-          <Link
-            href="/iso-20022-migration"
-            className="block text-sm font-semibold text-slate-700"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            ISO 20022 Migration
-          </Link>
-          <Link
-            href="/csp-assessment-v2026"
-            className="block text-sm font-semibold text-slate-700"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            SWIFT CSP v2026 Assessment
-          </Link>
-          <Link
-            href="/about-us"
-            className="block text-sm font-semibold text-slate-700"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            About Us & Global Hubs
-          </Link>
-          <Link
-            href="/careers"
-            className="block text-sm font-semibold text-slate-700"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Careers
-          </Link>
+      <nav className="max-w-[1600px] mx-auto px-6 md:px-8 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <Link
+          href="/"
+          className="font-mono text-[13px] font-bold text-white/90 tracking-tight hover:text-white transition-colors"
+        >
+          finoworks
+        </Link>
+
+        {/* Center Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-[13px] text-white/55 hover:text-white/90 transition-colors font-medium"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Right: Clock + CTA */}
+        <div className="hidden md:flex items-center gap-5">
+          <span className="font-mono text-[11px] text-white/35 tracking-wider">{clock}</span>
           <Link
             href="/contact-us"
-            className="block w-full bg-electric-500 text-white text-center font-bold py-3 rounded-lg"
-            onClick={() => setMobileMenuOpen(false)}
+            className="inline-flex items-center gap-2 bg-white text-[#05101f] font-bold text-[13px] px-5 py-2.5 rounded-full hover:bg-white/90 transition-all"
           >
-            Book Assessment
+            Book Assessment <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          className="md:hidden text-white/70 hover:text-white"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
+      </nav>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden bg-[#05101f]/95 backdrop-blur-xl border-t border-white/[0.08] px-6 py-6 flex flex-col gap-5">
+          {navLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="text-[15px] text-white/70 hover:text-white transition-colors font-medium"
+              onClick={() => setMobileOpen(false)}
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact-us"
+            className="inline-flex items-center gap-2 bg-white text-[#05101f] font-bold text-[14px] px-5 py-3 rounded-full w-fit mt-2"
+            onClick={() => setMobileOpen(false)}
+          >
+            Book Assessment <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
