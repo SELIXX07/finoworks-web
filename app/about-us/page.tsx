@@ -1,55 +1,70 @@
 import Link from 'next/link';
-import { MapPin, ShieldCheck, Globe, Building } from 'lucide-react';
+import { ArrowRight, Globe, Shield, Award, MapPin } from 'lucide-react';
 
 export default function AboutUsPage() {
+  const hubs = [
+    { city: 'Nairobi, Kenya', role: 'Global Corporate HQ & East Africa Hub', address: 'Mayfair Suites, Parklands Rd / Mpaka Rd, Westlands, Nairobi' },
+    { city: 'Bangalore, India', role: 'Global Dev & Engineering Facility', address: 'Clayworks, Bannerghatta Rd, Bengaluru (New 2026 Facility)' },
+    { city: 'Tennessee, USA', role: 'Regional Support & Client Hub', address: '2550 Meridian Blvd, Suite 200, Franklin, TN' },
+    { city: 'GCC Corridor', role: 'Middle East Regional Practice', address: 'Kuwait, Bahrain, Qatar, UAE (Dubai), Saudi Arabia, Oman' },
+  ];
+
   return (
     <div className="pt-32 pb-24 bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-16">
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 space-y-20">
+        {/* Header */}
         <div className="max-w-3xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 text-slate-800 text-xs font-mono font-bold">
-            ABOUT FINOWORKS TECHNOLOGIES
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-black text-xs font-mono font-bold">
+            <span className="w-2 h-2 rounded-full bg-[#0055ff]" />
+            <span>ORIGIN & MISSION</span>
           </div>
 
-          <h1 className="text-4xl md:text-6xl font-extrabold text-navy-900 tracking-tight">
-            Securing the Backbone of Global Finance.
+          <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight">
+            Specialized Financial Infrastructure Specialists.
           </h1>
 
           <p className="text-base text-slate-600 leading-relaxed">
-            Established in Kenya in 2025, FinoWorks Technologies recognized a crucial market gap in elite SWIFT financial messaging, cybersecurity, and regulatory compliance. Today, drawing on 15+ years of combined engineering expertise across Africa, USA, Middle East, and South America, we operate a lean, highly connected global network.
+            FinoWorks was founded in Nairobi, Kenya with a clear mandate: provide tier-1 financial institutions with deep, uncompromised SWIFT messaging engineering and independent cybersecurity audit services.
           </p>
         </div>
 
         {/* Global Hubs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-electric-50 text-electric-600 font-bold flex items-center justify-center">
-              <Building className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-lg text-navy-900">Kenya Hub (Corporate HQ)</h3>
-            <p className="text-xs text-slate-600">
-              Nairobi, Kenya — Mayfair Suites, Westlands. Operational Headquarters and Regional Hub for East Africa.
+        <div className="space-y-8">
+          <div className="section-head">
+            <span className="section-num">(01)</span>
+            <span>GLOBAL HUBS & FACILITIES</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {hubs.map((hub, idx) => (
+              <div key={idx} className="p-8 rounded-3xl bg-slate-50 border border-slate-200 space-y-4 hover:bg-white hover:shadow-md transition-all">
+                <div className="w-10 h-10 rounded-xl bg-black text-white flex items-center justify-center">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <h3 className="font-serif italic text-2xl text-black font-normal">{hub.city}</h3>
+                <p className="text-xs font-bold text-[#0055ff]">{hub.role}</p>
+                <p className="text-xs text-slate-500 leading-relaxed">{hub.address}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mission Card */}
+        <div className="p-10 md:p-14 rounded-3xl bg-black text-white flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl">
+          <div className="space-y-2">
+            <h3 className="text-2xl md:text-3xl font-extrabold">Join Our Engineering Network</h3>
+            <p className="text-sm text-slate-400">
+              Explore open CISA auditor, SWIFT integration, and core banking middleware engineering roles.
             </p>
           </div>
 
-          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-electric-50 text-electric-600 font-bold flex items-center justify-center">
-              <Building className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-lg text-navy-900">India Hub (Development Center)</h3>
-            <p className="text-xs text-slate-600">
-              Bangalore, India — Clayworks, Bannerghatta Rd. Global Development & Engineering Center (New 2026 Facility).
-            </p>
-          </div>
-
-          <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-electric-50 text-electric-600 font-bold flex items-center justify-center">
-              <Building className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-lg text-navy-900">USA Hub (Support & BizDev)</h3>
-            <p className="text-xs text-slate-600">
-              Franklin, Tennessee, USA — 2550 Meridian Blvd. Regional Support Hub ensuring 24/7 global coverage.
-            </p>
-          </div>
+          <Link
+            href="/careers"
+            className="bg-[#0055ff] hover:bg-white hover:text-black text-white font-bold px-8 py-4 rounded-full transition-all text-xs flex items-center gap-2 whitespace-nowrap shadow-md"
+          >
+            <span>View 10 Open Positions</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </div>

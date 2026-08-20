@@ -3,61 +3,46 @@ import { ArrowRight, BookOpen } from 'lucide-react';
 
 export default function InsightsPage() {
   const articles = [
-    {
-      title: 'Cloud vs. On-Premise: The Future of SWIFT Connectivity',
-      category: 'Infrastructure',
-      date: 'October 8, 2025',
-      excerpt:
-        'Should you host your own SWIFT Alliance Access or move to a cloud-based Service Bureau? We weigh TCO, agility, and data sovereignty concerns.',
-    },
-    {
-      title: 'Navigating SWIFT CSP v2026: Key Changes Every CISO Must Know',
-      category: 'Security',
-      date: 'October 8, 2025',
-      excerpt:
-        'The SWIFT CSP v2026 framework introduces stricter controls for Secure Zone segmentation and MFA. Here is the mandatory checklist for your independent audit.',
-    },
-    {
-      title: 'The ISO 20022 Deadline: Is Your Core Banking System Ready?',
-      category: 'Compliance',
-      date: 'October 8, 2025',
-      excerpt:
-        'Exploring the top 5 challenges banks face during MT to MX migration—from data truncation to AML filtering adjustments.',
-    },
+    { title: 'The 2026 SWIFT CSP Mandate: What CISOs Need to Know About Control 1.1 Segregation', date: 'August 2026', tag: 'CSCF v2026', read: '6 min read' },
+    { title: 'Avoiding MT ↔ MX Data Truncation in pacs.008 Migration Pipelines', date: 'July 2026', tag: 'ISO 20022', read: '8 min read' },
+    { title: 'Designing Dual-Site Active-Active Disaster Recovery for SWIFT Alliance Access', date: 'June 2026', tag: 'Architecture', read: '10 min read' },
+    { title: 'Why Automated RMA Surveillance is the Frontline Against Cross-Border Payment Fraud', date: 'May 2026', tag: 'Security', read: '5 min read' },
   ];
 
   return (
     <div className="pt-32 pb-24 bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 space-y-12">
-        <div className="space-y-4 max-w-2xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-electric-50 text-electric-600 text-xs font-mono font-bold">
-            TECHNICAL INSIGHTS & REGULATORY ANALYSIS
+      <div className="max-w-[1600px] mx-auto px-6 md:px-8 space-y-16">
+        <div className="max-w-3xl space-y-6">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-200 text-black text-xs font-mono font-bold">
+            <span className="w-2 h-2 rounded-full bg-[#0055ff]" />
+            <span>KNOWLEDGE & TECHNICAL PAPERS</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold text-navy-900 tracking-tight">
-            Payment Modernization Insights.
+
+          <h1 className="text-4xl md:text-6xl font-extrabold text-black tracking-tight">
+            Financial Engineering & Audit Insights.
           </h1>
+
+          <p className="text-base text-slate-600 leading-relaxed">
+            Deep-dive technical perspectives from our SWIFT solution architects and CISA certified assessors.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Articles List */}
+        <div className="space-y-6 max-w-4xl">
           {articles.map((art, idx) => (
-            <div
-              key={idx}
-              className="p-8 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between space-y-4 hover:border-electric-500/50 transition-all"
-            >
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-xs font-mono">
-                  <span className="text-electric-600 font-bold uppercase">{art.category}</span>
-                  <span className="text-slate-400">{art.date}</span>
-                </div>
-                <h3 className="text-xl font-bold text-navy-900 leading-snug">{art.title}</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">{art.excerpt}</p>
+            <div key={idx} className="p-8 rounded-3xl bg-slate-50 border border-slate-200 space-y-4 hover:bg-white hover:shadow-md transition-all">
+              <div className="flex justify-between items-center text-xs font-mono text-slate-500">
+                <span className="px-2.5 py-1 rounded bg-black text-white text-[10px] font-bold">{art.tag}</span>
+                <span>{art.date} · {art.read}</span>
               </div>
+
+              <h3 className="font-serif italic text-2xl md:text-3xl text-black font-normal leading-snug">{art.title}</h3>
 
               <Link
                 href="/contact-us"
-                className="inline-flex items-center gap-2 text-xs font-bold text-navy-900 hover:text-electric-500 transition-colors pt-4"
+                className="inline-flex items-center gap-2 text-xs font-bold text-[#0055ff] hover:text-black transition-colors"
               >
-                <span>Read Insight Article</span>
+                <span>Read Full Technical Brief</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
