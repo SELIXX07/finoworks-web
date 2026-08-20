@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 const projects = [
   {
@@ -12,7 +12,7 @@ const projects = [
     year: '2026',
     client: 'Kenya Commercial Bank',
     title: 'Active-Active Disaster Recovery for SWIFT Alliance Access',
-    desc: 'Dual-site failover architecture achieving 99.999% uptime during core banking outages.',
+    desc: 'Dual-site failover architecture achieving 99.999% uptime during core banking network outages.',
     tags: ['ACTIVE FAILOVER', 'SAA v7.5', 'DR RUNBOOK'],
     stat: '99.999% Uptime',
   },
@@ -34,14 +34,14 @@ const projects = [
     year: '2025',
     client: 'Regional Development Bank',
     title: 'MT103 → pacs.008 MX Migration with Zero Downtime',
-    desc: 'Full cutover from legacy MT messaging to structured XML with STP pipeline validation.',
+    desc: 'Full cutover from legacy MT messaging to structured XML with automated STP pipeline validation.',
     tags: ['PACS.008', 'MT103', 'ZERO DOWNTIME'],
     stat: '100% STP Processing',
   },
   {
     idx: '04',
-    category: 'STUDIO WORK',
-    type: 'MIDDLEWARE',
+    category: 'MIDDLEWARE',
+    type: 'ENTERPRISE INTEGRATION',
     year: '2026',
     client: 'Pan-African Financial Group',
     title: 'Enterprise Payment Hub — SIL to AutoClient Migration',
@@ -60,23 +60,23 @@ export default function WorkStrip() {
       <div className="flex items-center justify-between mb-8 home-reveal">
         <div className="section-head">
           <span className="section-num">(02)</span>
-          <span>RESULTS</span>
+          <span>SELECTED DEPLOYMENTS</span>
         </div>
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[13px] text-slate-500 font-semibold">
-            <strong className="text-black text-base font-bold">{String(active + 1).padStart(2, '0')}</strong> / {String(projects.length).padStart(2, '0')}
+          <span className="font-mono text-[13px] text-slate-500 font-bold">
+            <strong className="text-slate-900 text-base font-extrabold">{String(active + 1).padStart(2, '0')}</strong> / {String(projects.length).padStart(2, '0')}
           </span>
           <div className="flex gap-2">
             <button
               onClick={() => setActive((p) => (p - 1 + projects.length) % projects.length)}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-black hover:border-black transition-all"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-slate-900 hover:border-slate-900 transition-all"
               aria-label="Previous project"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => setActive((p) => (p + 1) % projects.length)}
-              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-black hover:border-black transition-all"
+              className="w-10 h-10 rounded-full border border-slate-300 bg-white shadow-sm flex items-center justify-center text-slate-700 hover:text-white hover:bg-slate-900 hover:border-slate-900 transition-all"
               aria-label="Next project"
             >
               <ArrowRight className="w-4 h-4" />
@@ -92,13 +92,12 @@ export default function WorkStrip() {
             key={i}
             className={`p-8 rounded-3xl border flex flex-col justify-between min-h-[380px] transition-all duration-300 cursor-pointer ${
               i === active
-                ? 'bg-black text-white border-black shadow-xl -translate-y-1'
+                ? 'bg-slate-900 text-white border-slate-900 shadow-xl -translate-y-1'
                 : 'bg-slate-50 text-slate-900 border-slate-200 hover:border-[#0055ff]/40 hover:bg-white hover:shadow-md'
             }`}
             onClick={() => setActive(i)}
           >
             <div className="space-y-4">
-              {/* Top meta */}
               <div className="flex justify-between items-start">
                 <span className={`font-mono text-[11px] font-bold ${i === active ? 'text-white/60' : 'text-slate-400'}`}>
                   {p.idx}
@@ -110,8 +109,7 @@ export default function WorkStrip() {
                 </span>
               </div>
 
-              {/* Client domain bar */}
-              <div className={`rounded-lg px-3 py-2 font-mono text-[11px] ${
+              <div className={`rounded-lg px-3 py-2 font-mono text-[11px] font-medium ${
                 i === active ? 'bg-white/10 text-white/80' : 'bg-white border border-slate-200 text-slate-600'
               }`}>
                 ● {p.client.toLowerCase().replace(/ /g, '')}.com
@@ -123,11 +121,11 @@ export default function WorkStrip() {
                 {p.type}
               </div>
 
-              <h3 className="font-serif italic text-[clamp(18px,1.6vw,22px)] leading-snug font-normal">
+              <h3 className="text-xl font-bold leading-snug tracking-tight">
                 {p.title}
               </h3>
 
-              <p className={`text-[13px] leading-relaxed ${i === active ? 'text-white/70' : 'text-slate-600'}`}>
+              <p className={`text-xs leading-relaxed font-normal ${i === active ? 'text-slate-300' : 'text-slate-600'}`}>
                 {p.desc}
               </p>
             </div>
@@ -157,9 +155,10 @@ export default function WorkStrip() {
       <div className="mt-8 home-reveal">
         <Link
           href="/contact-us"
-          className="text-[13px] text-slate-600 hover:text-[#0055ff] transition-colors font-semibold flex items-center gap-1.5"
+          className="text-[13px] text-slate-600 hover:text-[#0055ff] transition-colors font-bold flex items-center gap-1.5"
         >
-          See all case studies <ArrowRight className="w-3.5 h-3.5" />
+          <span>See all case studies & specifications</span>
+          <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
     </section>

@@ -62,16 +62,16 @@ export default function ServiceQuadrantGrid() {
             <span className="section-num">(03)</span>
             <span>SOLUTIONS & SYSTEMS</span>
           </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-black tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
             Infrastructure & Audit Systems Built for Scale.
           </h2>
         </div>
-        <p className="font-serif italic text-base text-slate-500 max-w-md">
+        <p className="text-sm text-slate-600 max-w-md font-normal leading-relaxed">
           Offers engineered for financial institutions: SWIFT CSP audit, ISO 20022 message conversion, payment middleware, and threat risk tools.
         </p>
       </div>
 
-      {/* 2x2 Quadrant Grid with DayNight 4-color signature palette */}
+      {/* 2x2 Quadrant Grid */}
       <div className="quad-grid home-reveal shadow-lg">
         {services.map((svc, idx) => (
           <div
@@ -87,12 +87,12 @@ export default function ServiceQuadrantGrid() {
 
               {/* Title & Desc */}
               <h3 className="qc-title">{svc.title}</h3>
-              <p className="text-xs md:text-sm leading-relaxed qc-soft mb-6">
+              <p className="text-xs md:text-sm leading-relaxed qc-soft mb-6 font-normal">
                 {svc.desc}
               </p>
 
               {/* Bullet list */}
-              <ul className="space-y-2 text-xs qc-soft font-medium">
+              <ul className="space-y-2 text-xs qc-soft font-semibold">
                 {svc.bullets.map((b, bi) => (
                   <li key={bi} className="flex items-center gap-2">
                     <span className="opacity-60">•</span>

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -114,11 +114,11 @@ export default function Hero() {
         ctx.fill();
       });
 
-      ctx.font = `600 11px 'Geist Mono', monospace`;
+      ctx.font = `700 11px 'JetBrains Mono', monospace`;
       ctx.fillStyle = '#0055ff';
       ctx.textAlign = 'center';
       ctx.letterSpacing = '0.15em';
-      ctx.fillText('TAP ME', CX, CY + 5);
+      ctx.fillText('NODE ORB', CX, CY + 5);
 
       t++;
       animId = requestAnimationFrame(render);
@@ -143,30 +143,30 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-start pt-28 pb-14 px-6 md:px-8 overflow-hidden bg-white">
-      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-10 items-start">
+      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,44vw)] gap-12 items-start">
         {/* ── LEFT COLUMN ── */}
         <div className="space-y-8 pt-4">
-          <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 border border-slate-200 rounded-full px-4 py-2 bg-slate-50/80 shadow-sm">
+          <div className="inline-flex items-center gap-2.5 text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 border border-slate-200 rounded-full px-4 py-2 bg-slate-50 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#0055ff] animate-pulse" />
             <span>SWIFT · ISO 20022 · COMPLIANCE</span>
             <span className="text-slate-300">/</span>
             <span className="text-[#0055ff] font-extrabold">CSP v2026</span>
           </div>
 
-          <h1 className="font-sans text-[clamp(36px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-black">
+          <h1 className="text-[clamp(38px,5.5vw,72px)] font-extrabold leading-[1.06] tracking-tight text-slate-900">
             SWIFT Infrastructure<br />
             & Independent<br />
             CSP Assessments{' '}
-            <em className="font-serif font-normal italic text-[#0055ff]">
+            <span className="text-[#0055ff] font-extrabold">
               That Certify.
-            </em>
+            </span>
           </h1>
 
-          <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-[520px]">
+          <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-[540px] font-normal">
             SWIFT Certified Provider. CISA-certified auditors auditing your CSCF v2026 controls, then engineering the remediation — so you pass the KYC Registry attestation on the first submission.
           </p>
 
-          {/* BIC Form with query parameter routing */}
+          {/* BIC Form */}
           <form onSubmit={handleAuditSubmit} className="flex items-center gap-3 max-w-[540px]">
             <div className="flex-1 flex items-center gap-3 bg-slate-50 border border-slate-300 focus-within:border-[#0055ff] rounded-full px-5 py-3.5 transition-colors shadow-sm">
               <input
@@ -174,12 +174,12 @@ export default function Hero() {
                 value={website}
                 onChange={(e) => setWebsite(e.target.value)}
                 placeholder="Enter your BIC or institution name…"
-                className="flex-1 bg-transparent text-sm text-black placeholder:text-slate-400 outline-none font-mono"
+                className="flex-1 bg-transparent text-sm text-slate-900 placeholder:text-slate-400 outline-none font-mono"
               />
             </div>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-black text-white font-bold text-[13px] px-7 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg"
+              className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-slate-900 text-white font-bold text-[13px] px-7 py-3.5 rounded-full transition-all duration-200 whitespace-nowrap shadow-md hover:shadow-lg"
             >
               <span>Free Audit</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -189,6 +189,7 @@ export default function Hero() {
             Free SWIFT CSP Gap Analysis & Audit Scope
           </p>
 
+          {/* Metrics bar */}
           <div className="flex flex-wrap items-center gap-0 pt-4 border-t border-slate-200">
             {[
               { label: 'EXPERIENCE', val: '15+ Yrs Combined' },
@@ -198,7 +199,7 @@ export default function Hero() {
               <div key={i} className="flex items-center">
                 <div className="pr-6 md:pr-10">
                   <div className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-bold">{m.label}</div>
-                  <div className="text-[15px] font-extrabold text-black mt-0.5">{m.val}</div>
+                  <div className="text-[16px] font-extrabold text-slate-900 mt-0.5">{m.val}</div>
                 </div>
                 {i < 2 && <div className="w-px h-8 bg-slate-200 mr-6 md:mr-10 hidden sm:block" />}
               </div>

@@ -16,14 +16,14 @@ export default function CtaBanner() {
         </div>
 
         {/* Big Headline in Black */}
-        <h2 className="font-sans text-[clamp(36px,5.5vw,76px)] font-extrabold leading-[1.06] tracking-tight text-black">
+        <h2 className="text-[clamp(38px,5.5vw,74px)] font-extrabold leading-[1.06] tracking-tight text-slate-900">
           Secure what your competitors{' '}
-          <em className="font-serif font-normal italic text-[#0055ff]">
+          <span className="text-[#0055ff]">
             can&apos;t risk.
-          </em>
+          </span>
         </h2>
 
-        <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-xl">
+        <p className="text-[clamp(15px,1.4vw,18px)] text-slate-600 leading-relaxed max-w-xl font-normal">
           Get your SWIFT infrastructure certified, migrate to ISO 20022 with zero downtime, and ensure 100% compliance with CISA-certified assessors.
         </p>
 
@@ -31,14 +31,14 @@ export default function CtaBanner() {
         <div className="flex flex-wrap items-center gap-4 pt-4">
           <Link
             href="/contact-us"
-            className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-black text-white font-bold text-[14px] px-8 py-4 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 bg-[#0055ff] hover:bg-slate-900 text-white font-bold text-[14px] px-8 py-4 rounded-full transition-all duration-200 shadow-md hover:shadow-lg"
           >
             <span>contact@finoworks.com</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/csp-assessment-v2026"
-            className="inline-flex items-center gap-2 border border-slate-300 hover:border-black bg-white text-black font-bold text-[14px] px-8 py-4 rounded-full transition-all shadow-sm"
+            className="inline-flex items-center gap-2 border border-slate-300 hover:border-slate-900 bg-white text-slate-900 font-bold text-[14px] px-8 py-4 rounded-full transition-all shadow-sm"
           >
             <span>Request Assessment Scope</span>
           </Link>

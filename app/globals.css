@@ -1,25 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Crisp Light Theme Tokens */
+  /* FinoWorks Banking Tech Design Tokens */
   --bg: #ffffff;
   --bg-subtle: #f8fafc;
-  --ink: #000000;
+  --ink: #0a0f1d;
   --ink-primary: #0a0f1d;
   --ink-soft: #475569;
   --ink-faint: #94a3b8;
   --accent: #0055ff;
   --accent-cyan: #00b4d8;
-  --accent-amber: #e8a735;
-  --line: rgba(15, 23, 42, 0.1);
-  --line-strong: rgba(15, 23, 42, 0.2);
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.16);
 
-  /* DayNight 4-Color Signature Quadrant Palette */
-  --card-cream-bg: #fbf4e6;
+  /* Unified Card Colors */
+  --card-cream-bg: #fbf6ec;
   --card-cream-ink: #14100c;
   --card-cream-soft: rgba(20, 16, 12, 0.68);
   --card-cream-hi: #e65100;
@@ -29,12 +28,12 @@
   --card-dark-soft: rgba(248, 250, 252, 0.68);
   --card-dark-hi: #00d2ff;
 
-  --card-ice-bg: #eaf2ff;
+  --card-ice-bg: #f0f6ff;
   --card-ice-ink: #0a1020;
   --card-ice-soft: rgba(10, 16, 32, 0.68);
   --card-ice-hi: #0055ff;
 
-  --card-amber-bg: #f6e2b8;
+  --card-amber-bg: #f8e8c8;
   --card-amber-ink: #1a140a;
   --card-amber-soft: rgba(26, 20, 10, 0.7);
   --card-amber-hi: #c44e00;
@@ -49,12 +48,13 @@ html {
 body {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: 'Geist', sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom Cursor Hide Native on Desktop */
+/* Custom Cursor */
 @media (hover: hover) and (pointer: fine) {
   body.has-custom-cursor,
   body.has-custom-cursor a,
@@ -64,9 +64,9 @@ body {
 ::selection { background: #0055ff; color: #ffffff; }
 
 /* Custom Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: rgba(0, 85, 255, 0.4); border-radius: 3px; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f8fafc; }
+::-webkit-scrollbar-thumb { background: rgba(0, 85, 255, 0.35); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: #0055ff; }
 
 /* ──────────────────────────────────────────────
@@ -79,7 +79,7 @@ body {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
   background-size: 180px 180px;
-  opacity: 0.024;
+  opacity: 0.02;
   animation: grainShift 0.5s steps(2) infinite;
 }
 
@@ -96,8 +96,8 @@ body {
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 0.75s cubic-bezier(0.7, 0, 0.2, 1),
-    transform 0.85s cubic-bezier(0.7, 0, 0.2, 1);
+    opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: calc(var(--reveal-i, 0) * 65ms);
   will-change: opacity, transform;
 }
@@ -113,9 +113,9 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Geist Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #64748b;
@@ -123,7 +123,7 @@ body {
 .section-num { color: var(--accent); font-weight: 700; }
 
 /* ──────────────────────────────────────────────
-   QUADRANT GRID (DayNight 2×2)
+   QUADRANT GRID (2×2)
 ──────────────────────────────────────────────── */
 .quad-grid {
   display: grid;
@@ -152,7 +152,6 @@ body {
   box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.08);
 }
 
-/* Corner radii */
 @media (min-width: 769px) {
   .quad-card:nth-child(1) { border-radius: 23px 0 0 0; }
   .quad-card:nth-child(2) { border-radius: 0 23px 0 0; }
@@ -160,7 +159,6 @@ body {
   .quad-card:nth-child(4) { border-radius: 0 0 23px 0; }
 }
 
-/* Quadrant Card Color Themes */
 .qc-cream { background: var(--card-cream-bg); color: var(--card-cream-ink); }
 .qc-dark  { background: var(--card-dark-bg);  color: var(--card-dark-ink); }
 .qc-ice   { background: var(--card-ice-bg);   color: var(--card-ice-ink); }
@@ -177,23 +175,23 @@ body {
 .qc-amber .qc-soft { color: var(--card-amber-soft); }
 
 .qc-num {
-  font-family: 'Geist Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
   font-weight: 700;
   opacity: 0.45;
 }
 .qc-tag {
-  font-family: 'Geist Mono', monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .qc-title {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(22px, 2.6vw, 32px);
-  line-height: 1.22;
-  font-weight: 400;
+  font-size: clamp(20px, 2.2vw, 26px);
+  line-height: 1.28;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin: 20px 0 14px;
 }
 
@@ -221,8 +219,9 @@ body {
   padding: 24px 0;
   cursor: pointer;
   list-style: none;
-  font-size: clamp(17px, 1.8vw, 22px);
-  font-weight: 600;
+  font-size: clamp(16px, 1.6vw, 20px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--ink);
   transition: color 0.2s;
 }
@@ -238,6 +237,7 @@ body {
   justify-content: center;
   flex-shrink: 0;
   font-size: 18px;
+  font-family: 'JetBrains Mono', monospace;
   color: var(--ink-soft);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
